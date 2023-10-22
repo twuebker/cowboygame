@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour
     public float collisionOffset = 0.05f;
     public ContactFilter2D movementFilter;
 
+    bool canMove = true;
+
     Vector2 movementInput;
     Rigidbody2D rb;
     Animator animator;
@@ -26,24 +28,27 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(movementInput != Vector2.zero) 
+        if(canMove) 
         {
-            bool success = TryMove(movementInput);
-            if(!success) 
+            if(movementInput != Vector2.zero) 
             {
-                success = TryMove(new Vector2(movementInput.x, 0));
-                if(!success) {
-                    success = TryMove(new Vector2(0, movementInput.y));
+                bool success = TryMove(movementInput);
+                if(!success) 
+                {
+                    success = TryMove(new Vector2(movementInput.x, 0));
+                    if(!success) {
+                        success = TryMove(new Vector2(0, movementInput.y));
+                    }
                 }
+                animator.SetBool("isMoving", success);
+            } else {
+                animator.SetBool("isMoving", false);
             }
-            animator.SetBool("isMoving", success);
-        } else {
-            animator.SetBool("isMoving", false);
-        }
-        if(movementInput.x < 0) {
-            spriteRenderer.flipX = true;
-        } else if(movementInput.x > 0) {
-            spriteRenderer.flipX = false;
+            if(movementInput.x < 0) {
+                spriteRenderer.flipX = true;
+            } else if(movementInput.x > 0) {
+                spriteRenderer.flipX = false;
+            }
         }
     }
 
@@ -74,5 +79,15 @@ public class PlayerController : MonoBehaviour
     void OnFire() 
     {
         animator.SetTrigger("shot");
+    }
+
+    public void LockMovement()
+    {
+        canMove = false;
+    }
+
+    public void UnlockMovement()
+    {
+        canMove = true;
     }
 }
