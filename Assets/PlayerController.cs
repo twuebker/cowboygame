@@ -44,11 +44,21 @@ public class PlayerController : MonoBehaviour
             } else {
                 animator.SetBool("isMoving", false);
             }
+            handleAnimations();
             if(movementInput.x < 0) {
                 spriteRenderer.flipX = true;
             } else if(movementInput.x > 0) {
                 spriteRenderer.flipX = false;
             }
+        }
+    }
+
+    private void handleAnimations() {
+        if(movementInput != Vector2.zero) {
+            animator.SetFloat("moveX", movementInput.x);
+            animator.SetFloat("moveY", movementInput.y);
+            animator.SetFloat("idleX", movementInput.x);
+            animator.SetFloat("idleY", movementInput.y);
         }
     }
 
