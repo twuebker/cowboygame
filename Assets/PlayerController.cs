@@ -12,6 +12,12 @@ public class PlayerController : MonoBehaviour
 
     bool canMove = true;
 
+    bool shotReady = false;
+
+    public GameObject bulletPrefab;
+
+    public Transform firePoint;
+
     Vector2 movementInput;
     Rigidbody2D rb;
     Animator animator;
@@ -89,6 +95,7 @@ public class PlayerController : MonoBehaviour
     void OnFire() 
     {
         animator.SetTrigger("shot");
+        StartCoroutine(Shoot());
     }
 
     public void LockMovement()
@@ -99,5 +106,38 @@ public class PlayerController : MonoBehaviour
     public void UnlockMovement()
     {
         canMove = true;
+    }
+
+    public void ShotAnimationReady()
+    {
+        shotReady = true;
+    }
+
+    public IEnumerator Shoot()
+    {
+        float idleX = animator.GetFloat("idleX");
+        float idleY = animator.GetFloat("idleY");
+        float angle = Mathf.Atan2(idleY, idleX) * Mathf.Rad2Deg - 90;
+
+        // Set the rotation of the bullet based on the angle
+        Quaternion bulletRotation = Quaternion.Euler(0f, 0f, angle);
+        // Instantiate a bullet at the fire point
+        while (!shotReady)
+        {
+            yield return null;
+        }
+        Vector3 pos = firePoint.position;
+        //correct some weird looking shots
+        if(idleX>0) {
+            pos.y += 0.02f;
+        }
+        GameObject bullet = Instantiate(bulletPrefab, pos, bulletRotation);
+        shotReady = false;
+        // Attach bullet controller script to the bullet
+        BulletController bulletController = bullet.GetComponent<BulletController>();
+
+        // Set bullet speed
+        bulletController.speed = 3f;
+        Destroy(bullet, 2f);
     }
 }
