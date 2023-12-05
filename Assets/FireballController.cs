@@ -15,5 +15,20 @@ public class FireballController : MonoBehaviour
             transform.position += (Vector3)direction * speed * Time.deltaTime;
         }
     }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        // Destroy the fireball when it hits something
+        Debug.Log("HELLO WORLD" + other.name);
+        if(other.name == "Player") {
+            PlayerController pc = other.gameObject.GetComponent<PlayerController>();
+            if(pc != null) {
+                pc.Death();
+            }
+        }
+        if(other.name != "Enemy") {
+            Destroy(gameObject);
+        }
+    }
 }
 

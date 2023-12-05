@@ -24,6 +24,8 @@ public class Enemy_Behavior : MonoBehaviour
 
     private Vector2 nextPatrolPoint;
     private bool isPatrolling = true;
+
+    private bool shotReady = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -131,18 +133,22 @@ public class Enemy_Behavior : MonoBehaviour
 
         // Trigger attack animation
         animator.SetTrigger("Attack");
-
-        // The actual spawning of the fireball is now handled by the SpawnFireball method,
-        // which will be called by an Animation Event.
+        StartCoroutine(SpawnFireball());
     }
 
 // This method will be called by an Animation Event during the attack animation.
-    public void SpawnFireball()
+    public IEnumerator SpawnFireball()
     {
         if (fireballPrefab != null)
         {
+            while (!shotReady)
+            {
+                yield return null;
+            }
+            shotReady = false;
             GameObject fireball = Instantiate(fireballPrefab, transform.position, Quaternion.identity);
             FireballController fireballController = fireball.GetComponent<FireballController>();
+            Destroy(fireball, 3f);
             if (fireballController != null)
             {
                 fireballController.target = GameObject.FindGameObjectWithTag("Player").transform;
@@ -158,6 +164,9 @@ public class Enemy_Behavior : MonoBehaviour
         }
     }
 
+    public void SetShotReady() {
+        shotReady = true;
+    }
     public void Die()
     {
         // Trigger death animation

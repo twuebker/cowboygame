@@ -147,6 +147,11 @@ public class PlayerController : MonoBehaviour
     }
 
     public void Death() {
-        
+        animator.SetTrigger("Death");
+        this.enabled = false;
+    }
+
+    public void Destroy() {
+        Destroy(gameObject);
     }
 }
