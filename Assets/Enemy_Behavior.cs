@@ -73,6 +73,9 @@ public class Enemy_Behavior : MonoBehaviour
 
     void FixedUpdate()
     {
+        if(playerTransform == null) {
+            return;
+        }
     float distanceToPlayer = Vector2.Distance(playerTransform.position, rb.position);
 
     if (distanceToPlayer < attackRange && canAttack)
@@ -150,8 +153,12 @@ public class Enemy_Behavior : MonoBehaviour
             FireballController fireballController = fireball.GetComponent<FireballController>();
             Destroy(fireball, 3f);
             if (fireballController != null)
-            {
-                fireballController.target = GameObject.FindGameObjectWithTag("Player").transform;
+            {   
+                Transform t = GameObject.FindGameObjectWithTag("Player").transform;
+                if(t == null) {
+                    yield break;
+                }
+                fireballController.target = t;
             }
             else
             {

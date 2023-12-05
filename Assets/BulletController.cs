@@ -9,6 +9,9 @@ public class BulletController : MonoBehaviour
 
     void Update()
     {
+        if(target == null) {
+            Destroy(gameObject);
+        }
         // Move the bullet in the direction it's facing
         transform.Translate(Vector2.up * speed * Time.deltaTime);
     }
@@ -28,7 +31,6 @@ public class BulletController : MonoBehaviour
             }
         }
         if(other.name != "Player") {
-            Debug.Log(other.name);
             Destroy(gameObject);
         }
     }
