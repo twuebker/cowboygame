@@ -5,6 +5,7 @@ using UnityEngine;
 public class BulletController : MonoBehaviour
 {
     public float speed = 5f;
+    public string target;
 
     void Update()
     {
@@ -15,6 +16,20 @@ public class BulletController : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         // Destroy the bullet when it hits something
-        Destroy(gameObject);
+        if(target == "Player") {
+            PlayerController pc = other.gameObject.GetComponent<PlayerController>();
+            if(pc != null) {
+                pc.Death();
+            }
+        } else if(target == "Enemy") {
+            Enemy_Behavior eb = other.gameObject.GetComponent<Enemy_Behavior>();
+            if(eb != null) {
+                eb.Die();
+            }
+        }
+        if(other.name != "Player") {
+            Debug.Log(other.name);
+            Destroy(gameObject);
+        }
     }
 }

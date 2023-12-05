@@ -158,15 +158,7 @@ public class Enemy_Behavior : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Bullet"))
-        {
-            Die();
-        }
-    }
-
-    void Die()
+    public void Die()
     {
         // Trigger death animation
         animator.SetTrigger("Death");
@@ -174,21 +166,10 @@ public class Enemy_Behavior : MonoBehaviour
         // Disable enemy components or behaviors that should not function after death
         // For example, disable the script that controls movement and attacks
         this.enabled = false; 
-
-        // Optionally wait for the death animation to finish playing before destroying the object
-        // This will require a coroutine since we need to delay the destruction
-        StartCoroutine(DestroyAfterAnimation(animator));
     }
 
-    IEnumerator DestroyAfterAnimation(Animator animator)
-    {
-    // Wait until the current animation clip is mostly finished playing
-    // You can multiply the length by a fraction (like 0.8f) to wait for less than the full length
-    float waitTime = animator.GetCurrentAnimatorStateInfo(0).length * 0.52f;
-    yield return new WaitForSeconds(waitTime);
-
-    // Then destroy the enemy game object
-    Destroy(gameObject);
+    public void Destroy() {
+        Destroy(gameObject);
     }
 
 }
