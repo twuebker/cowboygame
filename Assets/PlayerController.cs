@@ -24,12 +24,15 @@ public class PlayerController : MonoBehaviour
     SpriteRenderer spriteRenderer;
     List<RaycastHit2D> castCollisions = new List<RaycastHit2D>();
 
+    AudioSource shotAudio;
+
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        shotAudio = GetComponent<AudioSource>();
     }
 
     private void FixedUpdate()
@@ -131,13 +134,24 @@ public class PlayerController : MonoBehaviour
         if(idleX>0) {
             pos.y += 0.02f;
         }
+        //play shot audio
+        shotAudio.Play();
         GameObject bullet = Instantiate(bulletPrefab, pos, bulletRotation);
         shotReady = false;
         // Attach bullet controller script to the bullet
         BulletController bulletController = bullet.GetComponent<BulletController>();
-
+        
         // Set bullet speed
         bulletController.speed = 3f;
         Destroy(bullet, 2f);
+    }
+
+    public void Death() {
+        animator.SetTrigger("Death");
+        this.enabled = false;
+    }
+
+    public void Destroy() {
+        Destroy(gameObject);
     }
 }

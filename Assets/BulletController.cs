@@ -5,9 +5,13 @@ using UnityEngine;
 public class BulletController : MonoBehaviour
 {
     public float speed = 5f;
+    public string target;
 
     void Update()
     {
+        if(target == null) {
+            Destroy(gameObject);
+        }
         // Move the bullet in the direction it's facing
         transform.Translate(Vector2.up * speed * Time.deltaTime);
     }
@@ -15,6 +19,19 @@ public class BulletController : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         // Destroy the bullet when it hits something
-        Destroy(gameObject);
+        if(target == "Player") {
+            PlayerController pc = other.gameObject.GetComponent<PlayerController>();
+            if(pc != null) {
+                pc.Death();
+            }
+        } else if(target == "Enemy") {
+            Enemy_Behavior eb = other.gameObject.GetComponent<Enemy_Behavior>();
+            if(eb != null) {
+                eb.Die();
+            }
+        }
+        if(other.name != "Player") {
+            Destroy(gameObject);
+        }
     }
 }
