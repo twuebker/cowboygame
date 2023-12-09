@@ -19,8 +19,8 @@ public class FireballController : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         // Destroy the fireball when it hits something
-        Debug.Log("HELLO WORLD" + other.name);
         if(other.name == "Player") {
+            Debug.Log("Collided with player???");
             PlayerController pc = other.gameObject.GetComponent<PlayerController>();
             if(pc != null) {
                 pc.Death();

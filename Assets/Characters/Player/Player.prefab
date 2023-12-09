@@ -147,6 +147,8 @@ MonoBehaviour:
     maxDepth: 0
     minNormalAngle: 0
     maxNormalAngle: 0
+  bulletPrefab: {fileID: 0}
+  firePoint: {fileID: 0}
 --- !u!50 &1972299714863200402
 Rigidbody2D:
   serializedVersion: 4

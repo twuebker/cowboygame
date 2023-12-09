@@ -147,6 +147,7 @@ public class PlayerController : MonoBehaviour
     }
 
     public void Death() {
+        Debug.Log("Death was triggered");
         animator.SetTrigger("Death");
         this.enabled = false;
     }

@@ -20,6 +20,7 @@ public class BulletController : MonoBehaviour
     {
         // Destroy the bullet when it hits something
         if(target == "Player") {
+            Debug.Log("FUCKED UP");
             PlayerController pc = other.gameObject.GetComponent<PlayerController>();
             if(pc != null) {
                 pc.Death();

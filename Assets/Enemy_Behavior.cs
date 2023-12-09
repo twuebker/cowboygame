@@ -108,12 +108,19 @@ public class Enemy_Behavior : MonoBehaviour
 
     void ChasePlayer()
     {
+        if(playerTransform == null) {
+            return;
+        }
+        
         isPatrolling = false;
         MoveTowards(playerTransform.position, chaseSpeed);
     }
 
     void MoveTowards(Vector2 target, float speed)
     {
+    if(target == null) {
+        return;
+    }
     movement = (target - (Vector2)transform.position).normalized * speed;
     //  Rigidbody2D.MovePosition to Transform.position
     rb.MovePosition(Vector2.MoveTowards(rb.position, target, speed * Time.deltaTime));
