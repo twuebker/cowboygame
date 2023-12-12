@@ -5,7 +5,7 @@ using UnityEngine;
 public class FireballController : MonoBehaviour
 {
     public Transform target;
-    public float speed = 5f;
+    public float speed = 1f;
 
     void Update()
     {
