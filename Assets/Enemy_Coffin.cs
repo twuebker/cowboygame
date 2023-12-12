@@ -20,7 +20,11 @@ public class Enemy_Coffin : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
-        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if(player != null) {
+            playerTransform = player.transform;
+        }
+
     }
 
     // Update is called once per frame
