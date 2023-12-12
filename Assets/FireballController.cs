@@ -26,9 +26,6 @@ public class FireballController : MonoBehaviour
                 pc.Death();
             }
         }
-        if(other.name != "Enemy") {
-            Destroy(gameObject);
-        }
     }
 }
 
