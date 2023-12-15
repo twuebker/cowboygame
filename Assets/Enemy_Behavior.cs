@@ -188,6 +188,9 @@ public class Enemy_Behavior : MonoBehaviour
     }
     public void Die()
     {
+        if(!this.enabled) {
+            return;
+        }
         // Trigger death animation
         animator.SetTrigger("Death");
 
