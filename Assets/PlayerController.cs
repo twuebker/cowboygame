@@ -20,19 +20,18 @@ public class PlayerController : MonoBehaviour
 
     Vector2 movementInput;
     Rigidbody2D rb;
+    BoxCollider2D boxCollider;
     Animator animator;
     SpriteRenderer spriteRenderer;
     List<RaycastHit2D> castCollisions = new List<RaycastHit2D>();
-
-    AudioSource shotAudio;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        boxCollider = GetComponent<BoxCollider2D>();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        shotAudio = GetComponent<AudioSource>();
     }
 
     private void FixedUpdate()
@@ -75,12 +74,7 @@ public class PlayerController : MonoBehaviour
         if(direction == Vector2.zero) {
             return false;
         }
-        int count = rb.Cast(
-                direction,
-                movementFilter,
-                castCollisions,
-                moveSpeed * Time.fixedDeltaTime + collisionOffset);
-        if(count == 0) 
+        if(!hasCollisionsInDirection(direction)) 
         {
             rb.MovePosition(rb.position + direction * moveSpeed * Time.fixedDeltaTime);
             return true;
@@ -88,6 +82,15 @@ public class PlayerController : MonoBehaviour
         {
             return false;
         }
+    }
+
+    private bool hasCollisionsInDirection(Vector2 direction) {
+        int count = boxCollider.Cast(
+                 direction,
+                 movementFilter,
+                 castCollisions,
+                 moveSpeed * Time.fixedDeltaTime + collisionOffset);
+        return count != 0;
     }
 
     void OnMove(InputValue movementValue)
@@ -135,7 +138,7 @@ public class PlayerController : MonoBehaviour
             pos.y += 0.02f;
         }
         //play shot audio
-        shotAudio.Play();
+        AudioManager.Instance.PlayGunshot();
         GameObject bullet = Instantiate(bulletPrefab, pos, bulletRotation);
         shotReady = false;
         // Attach bullet controller script to the bullet

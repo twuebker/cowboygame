@@ -30,7 +30,10 @@ public class Enemy_Behavior : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
-        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if(player != null) {
+            playerTransform = player.transform;
+        }
         nextPatrolPoint = GetNextPatrolPoint();
         startingPosition = transform.position;
         rb = GetComponent<Rigidbody2D>();
@@ -111,7 +114,7 @@ public class Enemy_Behavior : MonoBehaviour
         if(playerTransform == null) {
             return;
         }
-        
+
         isPatrolling = false;
         MoveTowards(playerTransform.position, chaseSpeed);
     }
@@ -161,10 +164,12 @@ public class Enemy_Behavior : MonoBehaviour
             Destroy(fireball, 3f);
             if (fireballController != null)
             {   
-                Transform t = GameObject.FindGameObjectWithTag("Player").transform;
-                if(t == null) {
+                GameObject player = GameObject.FindGameObjectWithTag("Player");
+                if(player == null) {
+                    Debug.Log("No player!");
                     yield break;
                 }
+                Transform t = player.transform;
                 fireballController.target = t;
             }
             else
@@ -183,6 +188,9 @@ public class Enemy_Behavior : MonoBehaviour
     }
     public void Die()
     {
+        if(!this.enabled) {
+            return;
+        }
         // Trigger death animation
         animator.SetTrigger("Death");
 

@@ -34,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -43,7 +43,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -121,7 +121,826 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Coffin Side Sheet_0
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 227
+        width: 30
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb89ae7688e53014c8009443d3a1b7e4
+      internalID: 10024751
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Coffin Side Sheet_1
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 227
+        width: 30
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a412a4a2505f2047ab15b8242c8dfc0
+      internalID: 1439500679
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Coffin Side Sheet_2
+      rect:
+        serializedVersion: 2
+        x: 157
+        y: 227
+        width: 30
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a9bacb556542b5f4c84dacd9fc7e575d
+      internalID: 1212059671
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Coffin Side Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 231
+        y: 227
+        width: 30
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4fe799d67b77fd24a8f7a32c916b26c2
+      internalID: 126810112
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Coffin Side Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 305
+        y: 227
+        width: 30
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2cb8d51ed82ceb34c88b8a8936d18cb1
+      internalID: 40340440
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Coffin Side Sheet_5
+      rect:
+        serializedVersion: 2
+        x: 379
+        y: 227
+        width: 30
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 92c94e80600707649b59de855fa78f37
+      internalID: 1143986435
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Coffin Side Sheet_6
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 157
+        width: 31
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 13e9e6e4ba112754a943d4774667a239
+      internalID: 215849616
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Coffin Side Sheet_7
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 157
+        width: 31
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 95f4070220ade054989bacc8c84cebf3
+      internalID: 586031014
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Coffin Side Sheet_8
+      rect:
+        serializedVersion: 2
+        x: 157
+        y: 157
+        width: 31
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f1dcdbd0ab4713a4d929ddd43fe95bb9
+      internalID: 1761662235
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Coffin Side Sheet_9
+      rect:
+        serializedVersion: 2
+        x: 231
+        y: 157
+        width: 31
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d2d6da00626dc9c4d8a70946a87f204b
+      internalID: 1425121500
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Coffin Side Sheet_10
+      rect:
+        serializedVersion: 2
+        x: 305
+        y: 157
+        width: 31
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6577f58f0b2377e46beecc5df143d926
+      internalID: 675135
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Coffin Side Sheet_11
+      rect:
+        serializedVersion: 2
+        x: 379
+        y: 157
+        width: 31
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d532ff9dac519543afe767a02bcbafb
+      internalID: 336259640
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Coffin Side Sheet_12
+      rect:
+        serializedVersion: 2
+        x: 453
+        y: 157
+        width: 31
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 67a46b6ec0748074eb07bbc0345d053b
+      internalID: 1010096423
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Coffin Side Sheet_13
+      rect:
+        serializedVersion: 2
+        x: 527
+        y: 157
+        width: 31
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 09b110f3e344cb9429aa87793151d889
+      internalID: -1587441369
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Coffin Side Sheet_14
+      rect:
+        serializedVersion: 2
+        x: 601
+        y: 157
+        width: 30
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b8ae121a38bda5c4e9b228ad4d185c2e
+      internalID: -760610866
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Coffin Side Sheet_15
+      rect:
+        serializedVersion: 2
+        x: 675
+        y: 157
+        width: 30
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d507ba103c1e594dbd2ee7a21b6d476
+      internalID: 982861302
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Coffin Side Sheet_16
+      rect:
+        serializedVersion: 2
+        x: 749
+        y: 157
+        width: 31
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4c17f54d3e717704ba61dd32c5d29bc0
+      internalID: -975943332
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Coffin Side Sheet_17
+      rect:
+        serializedVersion: 2
+        x: 823
+        y: 157
+        width: 31
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 059a6631ae2d2a84f8e400ae1963dee7
+      internalID: 1929249800
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Coffin Side Sheet_18
+      rect:
+        serializedVersion: 2
+        x: 897
+        y: 157
+        width: 31
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69a75264d8c6c5443a55dd82c483f296
+      internalID: 1296959112
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Coffin Side Sheet_19
+      rect:
+        serializedVersion: 2
+        x: 971
+        y: 157
+        width: 31
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf99e4dd9b1aa2f4eaca216185430e8a
+      internalID: -84382581
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Coffin Side Sheet_20
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 87
+        width: 31
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0fed096666b3a0c4baa5927d89d275cb
+      internalID: 1056083561
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Coffin Side Sheet_21
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 87
+        width: 31
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 37c7189f07023d245b8290f662545e34
+      internalID: -459889584
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Coffin Side Sheet_22
+      rect:
+        serializedVersion: 2
+        x: 156
+        y: 87
+        width: 32
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 099f138e72594eb45a9f50d59ccfd1b8
+      internalID: 197803935
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Coffin Side Sheet_23
+      rect:
+        serializedVersion: 2
+        x: 239
+        y: 87
+        width: 45
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c1438b47503ff6e45bfc9d151679d527
+      internalID: -1818651007
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Coffin Side Sheet_24
+      rect:
+        serializedVersion: 2
+        x: 313
+        y: 87
+        width: 39
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 76cfeb1e766fb304396487547f565adb
+      internalID: -1617726012
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Coffin Side Sheet_25
+      rect:
+        serializedVersion: 2
+        x: 387
+        y: 87
+        width: 38
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6029dfd0de337fb4583470fccd270e3a
+      internalID: -1467995258
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Coffin Side Sheet_26
+      rect:
+        serializedVersion: 2
+        x: 461
+        y: 87
+        width: 38
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb3868a2a725f7a4288aadf97a20c2f3
+      internalID: -2053245076
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Coffin Side Sheet_27
+      rect:
+        serializedVersion: 2
+        x: 535
+        y: 87
+        width: 38
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 400455402e3747543b073b07d62da4d4
+      internalID: -1057384604
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Coffin Side Sheet_28
+      rect:
+        serializedVersion: 2
+        x: 609
+        y: 87
+        width: 38
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a7d17b199f3a73647a432b0c796181e7
+      internalID: 456262367
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Coffin Side Sheet_29
+      rect:
+        serializedVersion: 2
+        x: 683
+        y: 87
+        width: 31
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f6af04f263ceb244d8a2a15359fc059d
+      internalID: 907666681
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Coffin Side Sheet_30
+      rect:
+        serializedVersion: 2
+        x: 757
+        y: 87
+        width: 22
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2383c11b697324d41bb9e5f7ece4b72a
+      internalID: -183254409
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Coffin Side Sheet_31
+      rect:
+        serializedVersion: 2
+        x: 831
+        y: 87
+        width: 22
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dbf46c0fbfea1724da699a15011b025b
+      internalID: 1749716603
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Coffin Side Sheet_32
+      rect:
+        serializedVersion: 2
+        x: 897
+        y: 87
+        width: 30
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f522851984882ce4482dd297166a04d8
+      internalID: -1877015682
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Coffin Side Sheet_33
+      rect:
+        serializedVersion: 2
+        x: 971
+        y: 87
+        width: 30
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3cdf6cd29b2c16d42b8831159492c101
+      internalID: -1619608019
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Coffin Side Sheet_34
+      rect:
+        serializedVersion: 2
+        x: 1045
+        y: 87
+        width: 30
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e8615bc1175745549ae56f8c3c2304b0
+      internalID: -1477442103
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Coffin Side Sheet_35
+      rect:
+        serializedVersion: 2
+        x: 1119
+        y: 87
+        width: 30
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 06ef4bc5e7446754bb86eb424541bf72
+      internalID: 1494575181
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Coffin Side Sheet_36
+      rect:
+        serializedVersion: 2
+        x: 1193
+        y: 87
+        width: 30
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c093cf2cc76b5284da67752afcf12983
+      internalID: -1677878234
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Coffin Side Sheet_37
+      rect:
+        serializedVersion: 2
+        x: 1267
+        y: 87
+        width: 30
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d348936cdb1b0334fa970dcc556879ab
+      internalID: -1921540118
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Coffin Side Sheet_38
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 17
+        width: 34
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d7735f6e0733dbe41b0f94c1a682015c
+      internalID: -2118444226
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -132,7 +951,46 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Coffin Side Sheet_0: 10024751
+      Coffin Side Sheet_1: 1439500679
+      Coffin Side Sheet_10: 675135
+      Coffin Side Sheet_11: 336259640
+      Coffin Side Sheet_12: 1010096423
+      Coffin Side Sheet_13: -1587441369
+      Coffin Side Sheet_14: -760610866
+      Coffin Side Sheet_15: 982861302
+      Coffin Side Sheet_16: -975943332
+      Coffin Side Sheet_17: 1929249800
+      Coffin Side Sheet_18: 1296959112
+      Coffin Side Sheet_19: -84382581
+      Coffin Side Sheet_2: 1212059671
+      Coffin Side Sheet_20: 1056083561
+      Coffin Side Sheet_21: -459889584
+      Coffin Side Sheet_22: 197803935
+      Coffin Side Sheet_23: -1818651007
+      Coffin Side Sheet_24: -1617726012
+      Coffin Side Sheet_25: -1467995258
+      Coffin Side Sheet_26: -2053245076
+      Coffin Side Sheet_27: -1057384604
+      Coffin Side Sheet_28: 456262367
+      Coffin Side Sheet_29: 907666681
+      Coffin Side Sheet_3: 126810112
+      Coffin Side Sheet_30: -183254409
+      Coffin Side Sheet_31: 1749716603
+      Coffin Side Sheet_32: -1877015682
+      Coffin Side Sheet_33: -1619608019
+      Coffin Side Sheet_34: -1477442103
+      Coffin Side Sheet_35: 1494575181
+      Coffin Side Sheet_36: -1677878234
+      Coffin Side Sheet_37: -1921540118
+      Coffin Side Sheet_38: -2118444226
+      Coffin Side Sheet_4: 40340440
+      Coffin Side Sheet_5: 1143986435
+      Coffin Side Sheet_6: 215849616
+      Coffin Side Sheet_7: 586031014
+      Coffin Side Sheet_8: 1761662235
+      Coffin Side Sheet_9: 1425121500
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
