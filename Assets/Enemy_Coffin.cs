@@ -15,6 +15,8 @@ public class Enemy_Coffin : MonoBehaviour
 
     private bool isAttacking = false;
 
+    public int scoreValue;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -117,6 +119,7 @@ void OnTriggerEnter2D(Collider2D collision)
     {
         Die(); 
         Destroy(collision.gameObject); 
+        Score.AddScore(scoreValue);
     }
 }
 

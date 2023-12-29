@@ -25,6 +25,7 @@ public class BulletController : MonoBehaviour
             Enemy_Behavior eb = other.gameObject.GetComponent<Enemy_Behavior>();
             if(eb != null) {
                 eb.Die();
+                Score.AddScore(eb.scoreValue);
             }
         }
         if(other.name != "Player" && other.name != "Hitbox") {

@@ -121,6 +121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17633223185928244b0ee778a9cd22b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scoreValue: 10
   fireballPrefab: {fileID: 1947413826429616250, guid: 44bc71cb2238fbc40877edda8079f72d, type: 3}
   patrolSpeed: 0.5
   chaseSpeed: 0.5

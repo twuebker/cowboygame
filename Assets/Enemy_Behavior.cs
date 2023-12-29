@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Enemy_Behavior : MonoBehaviour
 {
+
+    public int scoreValue;
     private Animator animator;
     private Transform playerTransform;
     private Vector2 movement;
@@ -25,6 +27,8 @@ public class Enemy_Behavior : MonoBehaviour
     private Vector2 nextPatrolPoint;
     private bool isPatrolling = true;
 
+    private Collider2D coll;
+
     private bool shotReady = false;
     // Start is called before the first frame update
     void Start()
@@ -37,6 +41,7 @@ public class Enemy_Behavior : MonoBehaviour
         nextPatrolPoint = GetNextPatrolPoint();
         startingPosition = transform.position;
         rb = GetComponent<Rigidbody2D>();
+        coll = GetComponent<Collider2D>();
     }
 
     // Update is called once per frame
@@ -196,6 +201,7 @@ public class Enemy_Behavior : MonoBehaviour
 
         // Disable enemy components or behaviors that should not function after death
         // For example, disable the script that controls movement and attacks
+        coll.enabled = false;
         this.enabled = false; 
     }
 

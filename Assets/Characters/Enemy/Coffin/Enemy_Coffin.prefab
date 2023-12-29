@@ -126,6 +126,7 @@ MonoBehaviour:
   moveSpeed: 0.5
   attackRange: 1
   attackCooldown: 1
+  scoreValue: 10
 --- !u!61 &3066483074593602821
 BoxCollider2D:
   m_ObjectHideFlags: 0
