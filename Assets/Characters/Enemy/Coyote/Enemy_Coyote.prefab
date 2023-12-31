@@ -118,19 +118,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 126444237572820}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17633223185928244b0ee778a9cd22b1, type: 3}
+  m_Script: {fileID: 11500000, guid: 6b2227e9079fc4738af4e23ce60f8890, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   fireballPrefab: {fileID: 1947413826429616250, guid: 44bc71cb2238fbc40877edda8079f72d, type: 3}
-  patrolSpeed: 0.5
-  chaseSpeed: 0.5
+  patrolSpeed: 0.6
+  chaseSpeed: 0.6
   chaseTriggerDistance: 5
   attackRange: 1
   attackCooldown: 1
   patrolDistance: {x: -4, y: 4}
-  hitpoints: 300
+  _health: 300
   scoreValue: 10
-  sprite: {fileID: 7959854519104399731}
 --- !u!61 &472863447571635950
 BoxCollider2D:
   m_ObjectHideFlags: 0

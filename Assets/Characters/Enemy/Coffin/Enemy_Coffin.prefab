@@ -119,16 +119,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 7684019002718786961}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e03b0b3816307b1408b0293e55cfed86, type: 3}
+  m_Script: {fileID: 11500000, guid: 86e8adb0928a443179f9e295b492a9aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chaseTriggerDistance: 2
-  moveSpeed: 0.5
+  chaseTriggerDistance: 3
+  moveSpeed: 0.6
   attackRange: 1
-  attackCooldown: 1
-  sprite: {fileID: 860771362913240332}
+  attackCooldown: 2
   scoreValue: 10
-  hitpoints: 200
+  _health: 200
 --- !u!61 &3066483074593602821
 BoxCollider2D:
   m_ObjectHideFlags: 0
