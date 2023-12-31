@@ -23,7 +23,7 @@ public class FireballController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.name == "Enemy") {
+        if(other.name != "Player" && other.name != "Hitbox") {
             return;
         }
         handlePlayerCollision(other);

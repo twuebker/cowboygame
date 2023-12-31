@@ -5,7 +5,6 @@ using UnityEngine;
 public class Enemy_Behavior : MonoBehaviour
 {
 
-    public int scoreValue;
     private Animator animator;
     private Transform playerTransform;
     private Vector2 movement;
@@ -23,19 +22,23 @@ public class Enemy_Behavior : MonoBehaviour
     public float attackRange = 1f;
     public float attackCooldown = 1f;
     public Vector2 patrolDistance = new Vector2(-4f, 4f);
-
+    public int hitpoints;
+    public int scoreValue;
     private Vector2 nextPatrolPoint;
     private bool isPatrolling = true;
 
     private Collider2D coll;
 
     private bool shotReady = false;
+
+    public SpriteRenderer sprite;
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
         GameObject player = GameObject.FindGameObjectWithTag("Player");
-        if(player != null) {
+        if (player != null)
+        {
             playerTransform = player.transform;
         }
         nextPatrolPoint = GetNextPatrolPoint();
@@ -49,48 +52,49 @@ public class Enemy_Behavior : MonoBehaviour
     {
         if (attackTimer > 0)
         {
-        attackTimer -= Time.deltaTime;
-        if (attackTimer <= 0)
+            attackTimer -= Time.deltaTime;
+            if (attackTimer <= 0)
             {
-            canAttack = true; 
+                canAttack = true;
             }
         }
 
-    // Attack timer logic can stay in Update if it's not directly related to physics    
-    if (attackTimer > 0)
+        // Attack timer logic can stay in Update if it's not directly related to physics    
+        if (attackTimer > 0)
         {
-        attackTimer -= Time.deltaTime;
+            attackTimer -= Time.deltaTime;
         }
 
-    // Update animator parameters
-    animator.SetFloat("MoveX", Mathf.Abs(movement.x));
-    animator.SetFloat("MoveY", movement.y);
-    animator.SetBool("IsMoving", movement != Vector2.zero);
-    animator.SetBool("IsAttacking", attackTimer > 0);
+        // Update animator parameters
+        animator.SetFloat("MoveX", Mathf.Abs(movement.x));
+        animator.SetFloat("MoveY", movement.y);
+        animator.SetBool("IsMoving", movement != Vector2.zero);
+        animator.SetBool("IsAttacking", attackTimer > 0);
 
-    // Sprite flipping logic can stay in Update
-    if (movement.x < 0)
+        // Sprite flipping logic can stay in Update
+        if (movement.x < 0)
         {
-        GetComponent<SpriteRenderer>().flipX = true; // left flip Sprite
+            GetComponent<SpriteRenderer>().flipX = true; // left flip Sprite
         }
-    else if (movement.x > 0)
+        else if (movement.x > 0)
         {
-        GetComponent<SpriteRenderer>().flipX = false; // right normal Sprite
+            GetComponent<SpriteRenderer>().flipX = false; // right normal Sprite
         }
     }
 
     void FixedUpdate()
     {
-        if(playerTransform == null) {
+        if (playerTransform == null)
+        {
             return;
         }
-    float distanceToPlayer = Vector2.Distance(playerTransform.position, rb.position);
+        float distanceToPlayer = Vector2.Distance(playerTransform.position, rb.position);
 
-    if (distanceToPlayer < attackRange && canAttack)
+        if (distanceToPlayer < attackRange && canAttack)
         {
-        Attack();
-        canAttack = false; 
-        attackTimer = attackCooldown; 
+            Attack();
+            canAttack = false;
+            attackTimer = attackCooldown;
         }
         else if (distanceToPlayer < chaseTriggerDistance)
         {
@@ -116,7 +120,8 @@ public class Enemy_Behavior : MonoBehaviour
 
     void ChasePlayer()
     {
-        if(playerTransform == null) {
+        if (playerTransform == null)
+        {
             return;
         }
 
@@ -126,12 +131,13 @@ public class Enemy_Behavior : MonoBehaviour
 
     void MoveTowards(Vector2 target, float speed)
     {
-    if(target == null) {
-        return;
-    }
-    movement = (target - (Vector2)transform.position).normalized * speed;
-    //  Rigidbody2D.MovePosition to Transform.position
-    rb.MovePosition(Vector2.MoveTowards(rb.position, target, speed * Time.deltaTime));
+        if (target == null)
+        {
+            return;
+        }
+        movement = (target - (Vector2)transform.position).normalized * speed;
+        //  Rigidbody2D.MovePosition to Transform.position
+        rb.MovePosition(Vector2.MoveTowards(rb.position, target, speed * Time.deltaTime));
     }
 
 
@@ -154,7 +160,23 @@ public class Enemy_Behavior : MonoBehaviour
         StartCoroutine(SpawnFireball());
     }
 
-// This method will be called by an Animation Event during the attack animation.
+    void Die()
+    {
+        if (!this.enabled)
+        {
+            return;
+        }
+        // Trigger death animation
+        animator.SetTrigger("Death");
+        Score.AddScore(scoreValue);
+        StartCoroutine(FadeAlpha());
+        // Disable enemy components or behaviors that should not function after death
+        // For example, disable the script that controls movement and attacks
+        coll.enabled = false;
+        this.enabled = false;
+    }
+
+    // This method will be called by an Animation Event during the attack animation.
     public IEnumerator SpawnFireball()
     {
         if (fireballPrefab != null)
@@ -168,9 +190,10 @@ public class Enemy_Behavior : MonoBehaviour
             FireballController fireballController = fireball.GetComponent<FireballController>();
             Destroy(fireball, 3f);
             if (fireballController != null)
-            {   
+            {
                 GameObject player = GameObject.FindGameObjectWithTag("Player");
-                if(player == null) {
+                if (player == null)
+                {
                     Debug.Log("No player!");
                     yield break;
                 }
@@ -188,25 +211,47 @@ public class Enemy_Behavior : MonoBehaviour
         }
     }
 
-    public void SetShotReady() {
+    public void SetShotReady()
+    {
         shotReady = true;
     }
-    public void Die()
+
+    public void Destroy()
     {
-        if(!this.enabled) {
-            return;
-        }
-        // Trigger death animation
-        animator.SetTrigger("Death");
-
-        // Disable enemy components or behaviors that should not function after death
-        // For example, disable the script that controls movement and attacks
-        coll.enabled = false;
-        this.enabled = false; 
-    }
-
-    public void Destroy() {
         Destroy(gameObject);
     }
 
+    public void TakeDamage(int damage)
+    {
+        hitpoints -= damage;
+        if (hitpoints <= 0)
+        {
+            Die();
+        }
+        else
+        {
+            StartCoroutine(FlashRed());
+        }
+    }
+
+    public IEnumerator FlashRed()
+    {
+        GetComponent<SpriteRenderer>().color = Color.red;
+        yield return new WaitForSeconds(0.1f);
+        GetComponent<SpriteRenderer>().color = Color.white;
+    }
+
+    public IEnumerator FadeAlpha()
+    {
+        float duration = 0.7f;
+        float startTime = Time.time;
+        SpriteRenderer renderer = GetComponent<SpriteRenderer>();
+        while (Time.time < startTime + duration)
+        {
+            Color clr = renderer.color;
+            Color newColor = new Color(clr.r, clr.g, clr.b, clr.a - (Time.deltaTime / duration));
+            renderer.color = newColor;
+            yield return null;
+        }
+    }
 }

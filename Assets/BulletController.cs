@@ -6,10 +6,12 @@ public class BulletController : MonoBehaviour
 {
     public float speed = 5f;
     public string target;
+    public int damage;
 
     void Update()
     {
-        if(target == null) {
+        if (target == null)
+        {
             Destroy(gameObject);
         }
         // Move the bullet in the direction it's facing
@@ -19,25 +21,32 @@ public class BulletController : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         // Destroy the bullet when it hits something
-        if(target == "Player") {
+        if (target == "Player")
+        {
             handlePlayerCollision(other);
-        } else if(target == "Enemy") {
+        }
+        else if (target == "Enemy")
+        {
             Enemy_Behavior eb = other.gameObject.GetComponent<Enemy_Behavior>();
-            if(eb != null) {
-                eb.Die();
-                Score.AddScore(eb.scoreValue);
+            if (eb != null)
+            {
+                eb.TakeDamage(damage);
             }
         }
-        if(other.name != "Player" && other.name != "Hitbox") {
+        if (other.name != "Player" && other.name != "Hitbox")
+        {
             Destroy(gameObject);
         }
     }
 
-    private void handlePlayerCollision(Collider2D other) {
-        if(other.name == "Player" || other.name == "Hitbox") {
+    private void handlePlayerCollision(Collider2D other)
+    {
+        if (other.name == "Player" || other.name == "Hitbox")
+        {
             GameObject player = GameObject.FindGameObjectWithTag("Player");
             PlayerController pc = player.GetComponent<PlayerController>();
-            if(pc != null) {
+            if (pc != null)
+            {
                 pc.Death();
             }
         }

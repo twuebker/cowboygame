@@ -36,33 +36,41 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(canMove) 
+        if (canMove)
         {
-            if(movementInput != Vector2.zero) 
+            if (movementInput != Vector2.zero)
             {
                 bool success = TryMove(movementInput);
-                if(!success) 
+                if (!success)
                 {
                     success = TryMove(new Vector2(movementInput.x, 0));
-                    if(!success) {
+                    if (!success)
+                    {
                         success = TryMove(new Vector2(0, movementInput.y));
                     }
                 }
                 animator.SetBool("isMoving", success);
-            } else {
+            }
+            else
+            {
                 animator.SetBool("isMoving", false);
             }
             handleAnimations();
-            if(movementInput.x < 0) {
+            if (movementInput.x < 0)
+            {
                 spriteRenderer.flipX = true;
-            } else if(movementInput.x > 0) {
+            }
+            else if (movementInput.x > 0)
+            {
                 spriteRenderer.flipX = false;
             }
         }
     }
 
-    private void handleAnimations() {
-        if(movementInput != Vector2.zero) {
+    private void handleAnimations()
+    {
+        if (movementInput != Vector2.zero)
+        {
             animator.SetFloat("moveX", movementInput.x);
             animator.SetFloat("moveY", movementInput.y);
             animator.SetFloat("idleX", movementInput.x);
@@ -70,21 +78,25 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private bool TryMove(Vector2 direction) {
-        if(direction == Vector2.zero) {
+    private bool TryMove(Vector2 direction)
+    {
+        if (direction == Vector2.zero)
+        {
             return false;
         }
-        if(!hasCollisionsInDirection(direction)) 
+        if (!hasCollisionsInDirection(direction))
         {
             rb.MovePosition(rb.position + direction * moveSpeed * Time.fixedDeltaTime);
             return true;
-        } else 
+        }
+        else
         {
             return false;
         }
     }
 
-    private bool hasCollisionsInDirection(Vector2 direction) {
+    private bool hasCollisionsInDirection(Vector2 direction)
+    {
         int count = boxCollider.Cast(
                  direction,
                  movementFilter,
@@ -98,7 +110,7 @@ public class PlayerController : MonoBehaviour
         movementInput = movementValue.Get<Vector2>();
     }
 
-    void OnFire() 
+    void OnFire()
     {
         animator.SetTrigger("shot");
         StartCoroutine(Shoot());
@@ -134,7 +146,8 @@ public class PlayerController : MonoBehaviour
         }
         Vector3 pos = firePoint.position;
         //correct some weird looking shots
-        if(idleX>0) {
+        if (idleX > 0)
+        {
             pos.y += 0.02f;
         }
         //play shot audio
@@ -143,19 +156,21 @@ public class PlayerController : MonoBehaviour
         shotReady = false;
         // Attach bullet controller script to the bullet
         BulletController bulletController = bullet.GetComponent<BulletController>();
-        
+
         // Set bullet speed
         bulletController.speed = 3f;
         Destroy(bullet, 2f);
     }
 
-    public void Death() {
+    public void Death()
+    {
         Debug.Log("Death was triggered");
         animator.SetTrigger("Death");
         this.enabled = false;
     }
 
-    public void Destroy() {
+    public void Destroy()
+    {
         Destroy(gameObject);
     }
 }
