@@ -10,11 +10,14 @@ public class WorldTime : MonoBehaviour
     
     [SerializeField]
     private float dayLength;
+    [SerializeField] 
+    private string startTime; 
     private TimeSpan currentTime;
     private float minuteLength => dayLength / WorldTimeConstants.MinutesInDay;
     
     private void Start() 
     {
+        currentTime = TimeSpan.Parse(startTime);
         StartCoroutine(AddMinute());
     }
     private IEnumerator AddMinute()
