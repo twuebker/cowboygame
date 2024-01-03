@@ -632,19 +632,7 @@ MonoBehaviour:
   m_Value: -80
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 996328935}
-        m_TargetAssemblyTypeName: SettingsVolume, Assembly-CSharp
-        m_MethodName: SetVolume
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &473097706
 GameObject:
   m_ObjectHideFlags: 0
@@ -1326,6 +1314,7 @@ GameObject:
   - component: {fileID: 996328933}
   - component: {fileID: 996328932}
   - component: {fileID: 996328935}
+  - component: {fileID: 996328936}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1430,7 +1419,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b1b64a35718d4f72b6464e8027434d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioMixer: {fileID: 24100000, guid: 07722beca5ed54ab8b71322b385578de, type: 2}
+  key: 
+  defaultValue: 0
+  onValueLoaded:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &996328936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 996328930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db82c12a80c254049910ad07bdf42ac5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: 
 --- !u!1 &1073989847
 GameObject:
   m_ObjectHideFlags: 0
