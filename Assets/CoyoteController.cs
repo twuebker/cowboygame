@@ -14,8 +14,6 @@ public class CoyoteController : MonoBehaviour, IDamageable
     public GameObject fireballPrefab;
     private bool canAttack = true;
 
-
-
     public float patrolSpeed = 2f;
     public float chaseSpeed = 3.5f;
     public float chaseTriggerDistance = 5f;
