@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Pathfinding;
 
 public class CoyoteController : MonoBehaviour, IDamageable
 {
@@ -13,6 +14,7 @@ public class CoyoteController : MonoBehaviour, IDamageable
     private Rigidbody2D rb;
     public GameObject fireballPrefab;
     private bool canAttack = true;
+    private AIPath aiPath;
 
     public float patrolSpeed = 2f;
     public float chaseSpeed = 3.5f;
@@ -48,6 +50,7 @@ public class CoyoteController : MonoBehaviour, IDamageable
     void Start()
     {
         animator = GetComponent<Animator>();
+        aiPath = GetComponent<AIPath>();
         sprite = GetComponent<SpriteRenderer>();
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
@@ -62,63 +65,82 @@ public class CoyoteController : MonoBehaviour, IDamageable
 
     // Update is called once per frame
     void Update()
+{
+    // Attack timer logic can stay in Update if it's not directly related to physics    
+    if (attackTimer > 0)
     {
-        if (attackTimer > 0)
+        attackTimer -= Time.deltaTime;
+        if (attackTimer <= 0)
         {
-            attackTimer -= Time.deltaTime;
-            if (attackTimer <= 0)
-            {
-                canAttack = true;
-            }
-        }
-
-        // Attack timer logic can stay in Update if it's not directly related to physics    
-        if (attackTimer > 0)
-        {
-            attackTimer -= Time.deltaTime;
-        }
-
-        // Update animator parameters
-        animator.SetFloat("MoveX", Mathf.Abs(movement.x));
-        animator.SetFloat("MoveY", movement.y);
-        animator.SetBool("IsMoving", movement != Vector2.zero);
-        animator.SetBool("IsAttacking", attackTimer > 0);
-
-        // Sprite flipping logic can stay in Update
-        if (movement.x < 0)
-        {
-            sprite.flipX = true; // left flip Sprite
-        }
-        else if (movement.x > 0)
-        {
-            sprite.flipX = false; // right normal Sprite
+            canAttack = true;
         }
     }
+
+    // Assuming playerTransform could be destroyed (player dies or is removed from the scene)
+    if (playerTransform != null)
+    {
+        // Calculate distance to player and store it for use in FixedUpdate
+        float distanceToPlayer = Vector2.Distance(playerTransform.position, transform.position);
+
+        // Set the IsAttacking parameter based on the attack timer
+        animator.SetBool("IsAttacking", attackTimer > 0);
+    }
+
+    // Update the sprite flip based on the AIPath's desired velocity
+    if (aiPath.desiredVelocity.x < 0)
+    {
+        sprite.flipX = true; // left flip Sprite
+    }
+    else if (aiPath.desiredVelocity.x > 0)
+    {
+        sprite.flipX = false; // right normal Sprite
+    }
+}
+
 
     void FixedUpdate()
+{
+    if (playerTransform == null)
     {
-        if (playerTransform == null)
-        {
-            return;
-        }
-        float distanceToPlayer = Vector2.Distance(playerTransform.position, rb.position);
-
-        if (distanceToPlayer < attackRange && canAttack)
-        {
-            Attack();
-            canAttack = false;
-            attackTimer = attackCooldown;
-        }
-        else if (distanceToPlayer < chaseTriggerDistance)
-        {
-            ChasePlayer();
-        }
-        else
-        {
-            Patrol();
-        }
-
+        // If the player is not present (e.g., has been destroyed), do nothing.
+        return;
     }
+
+    // Update the AIPath's destination to be the player's position
+    aiPath.destination = playerTransform.position;
+
+    // Calculate the distance to the player again in case it's needed for logic within FixedUpdate
+    float distanceToPlayer = Vector2.Distance(playerTransform.position, rb.position);
+
+    // Perform the attack if in range and if the attack cooldown has elapsed
+    if (distanceToPlayer < attackRange && canAttack)
+    {
+        Attack();
+        canAttack = false;
+        attackTimer = attackCooldown;
+    }
+
+    // The UpdateAnimation call will use the AIPath's desired velocity to update the animation parameters
+    UpdateAnimation(aiPath.desiredVelocity);
+}
+
+void UpdateAnimation(Vector2 velocity)
+{
+    // Check if the AIPath component is moving and if the velocity is significant
+    bool isMoving = aiPath.canMove && velocity.sqrMagnitude > 0.1f;
+    animator.SetBool("IsMoving", isMoving); // Use the correct parameter name as defined in your Animator
+    
+    if (isMoving)
+    {
+        // Calculate the local direction of the movement
+        Vector2 localDirection = transform.InverseTransformDirection(velocity.x, velocity.y, 0);
+        // Set the MoveX and MoveY parameters with the local direction values
+        animator.SetFloat("MoveX", localDirection.x);
+        animator.SetFloat("MoveY", localDirection.y);
+    }
+}
+
+
 
     void Patrol()
     {
