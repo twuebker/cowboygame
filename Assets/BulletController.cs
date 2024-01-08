@@ -27,10 +27,9 @@ public class BulletController : MonoBehaviour
         }
         else if (target == "Enemy")
         {
-            CoyoteController eb = other.gameObject.GetComponent<CoyoteController>();
-            if (eb != null)
-            {
-                eb.OnHit(damage);
+            IDamageable damageable = other.gameObject.GetComponent<IDamageable>();
+            if(damageable != null) {
+                damageable.OnHit(damage);
             }
         }
         if (other.name != "Player" && other.name != "Hitbox")

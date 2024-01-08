@@ -8,8 +8,5 @@ public interface IDamageable
         get; set;
     }
 
-    public void OnHit(float damage) 
-    {
-
-    }
+    public void OnHit(float damage);
 }
