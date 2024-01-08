@@ -422,7 +422,8 @@ MonoBehaviour:
   attackMask:
     serializedVersion: 2
     m_Bits: 8
-  hitpoints: 10
+  scoreValue: 10
+  _health: 200
 --- !u!50 &7487921915569295370
 Rigidbody2D:
   serializedVersion: 4
