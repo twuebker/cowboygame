@@ -68,6 +68,13 @@ public class EnemyController : MonoBehaviour, IDamageable
 
     void Update()
     {
+        // Check if the player has been destroyed and stop executing if it has
+        if (player == null)
+        {
+        aiPath.canMove = false;
+        return; // Exit the Update method early
+        }
+
         if (!isAttacking)
         {
             aiPath.canMove = true;
@@ -78,6 +85,9 @@ public class EnemyController : MonoBehaviour, IDamageable
 
     void CheckForAttackOpportunity()
     {
+        // Check if the player has been destroyed
+        if (player == null) return;
+        
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
         if (distanceToPlayer < attackRange && !coolingDown)
         {
