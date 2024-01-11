@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class Score : MonoBehaviour
 {
     
-
+    public Text pointsText;
     public TextMeshProUGUI text;
     private static int score;
 
@@ -35,5 +36,11 @@ public class Score : MonoBehaviour
 
     public static void SetScore(int scoreToSet) {
         score = scoreToSet;
+    }
+
+    public void Setup(int score)
+    {
+        gameObject.SetActive(true);
+        pointsText.text = score.ToString + " POINTS";
     }
 }
