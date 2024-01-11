@@ -5,10 +5,10 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
-    public GameOverScreen GameOverScreen;
+    public Score Score;
 
     public void GameOver()
     {
-        GameOverScreen.Setup(maxPlatform);
+        Score.Setup(score);
     }
 }

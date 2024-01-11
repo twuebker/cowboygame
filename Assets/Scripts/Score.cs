@@ -41,6 +41,6 @@ public class Score : MonoBehaviour
     public void Setup(int score)
     {
         gameObject.SetActive(true);
-        pointsText.text = score.ToString + " POINTS";
+        pointsText.text = score.ToString() + " POINTS";
     }
 }
