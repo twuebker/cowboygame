@@ -7,8 +7,4 @@ public class GameController : MonoBehaviour
 {
     public Score Score;
 
-    public void GameOver()
-    {
-        Score.Setup(score);
-    }
 }
