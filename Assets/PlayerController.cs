@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -17,7 +17,8 @@ public class PlayerController : MonoBehaviour
     public GameObject bulletPrefab;
 
     public Transform firePoint;
-
+    public GameController gameManager;
+    private bool isDead;
     Vector2 movementInput;
     Rigidbody2D rb;
     BoxCollider2D boxCollider;
@@ -167,10 +168,12 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Death was triggered");
         animator.SetTrigger("Death");
         this.enabled = false;
+        gameManager.gameOver();
     }
 
     public void Destroy()
     {
         Destroy(gameObject);
     }
+
 }
