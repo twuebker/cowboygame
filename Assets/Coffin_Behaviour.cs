@@ -17,6 +17,7 @@ public class EnemyController : MonoBehaviour, IDamageable
     private SpriteRenderer sprite;
     public int scoreValue = 10;
     public float _health = 200f;
+    private Collider2D[] coll;
 
     public float Health {
         get {
@@ -39,7 +40,6 @@ public class EnemyController : MonoBehaviour, IDamageable
 
     public IEnumerator FlashRed()
     {
-        Debug.Log("Trying to change color");
         sprite.color = Color.red;
         yield return new WaitForSeconds(0.1f);
         sprite.color = Color.white;
@@ -56,6 +56,7 @@ public class EnemyController : MonoBehaviour, IDamageable
             sprite.color = newColor;
             yield return null;
         }
+        Destroy(gameObject);
     }
 
     void Start()
@@ -64,6 +65,7 @@ public class EnemyController : MonoBehaviour, IDamageable
         animator = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
         sprite = GetComponentInChildren<SpriteRenderer>();
+        coll = GetComponentsInChildren<Collider2D>();
         AIDestinationSetter aiDestinationSetter = GetComponent<AIDestinationSetter>();
         aiDestinationSetter.target = player;
     }
@@ -144,8 +146,11 @@ public class EnemyController : MonoBehaviour, IDamageable
         animator.SetTrigger("death");
         Score.AddScore(scoreValue);
         this.enabled = false;
+        foreach(Collider2D c in coll) {
+            c.enabled = false;
+        }
+        aiPath.canMove = false;
         StartCoroutine(FadeAlpha());
-        GetComponent<Rigidbody2D>().isKinematic = true;
     }
 
 }
