@@ -4,14 +4,39 @@ using UnityEngine;
 
 public class EnemySpawning : MonoBehaviour
 {
+    // Singleton instance
+    private static EnemySpawning _instance;
+
+    // Public property to access the instance
+    public static EnemySpawning Instance
+    {
+        get
+        {
+            // If there is no instance, find it in the scene
+            if (_instance == null)
+            {
+                _instance = FindObjectOfType<EnemySpawning>();
+
+                // If still not found, create a new instance
+                if (_instance == null)
+                {
+                    GameObject singletonObject = new GameObject("EnemySpawningSingleton");
+                    _instance = singletonObject.AddComponent<EnemySpawning>();
+                }
+            }
+
+            return _instance;
+        }
+    }
+
     public GameObject[] spawnPoints;
     public GameObject[] enemyPrefabs;
     public float minimumSpawnTime;
     public float maximumSpawnTime;
     public int maximumNumberOfEnemies;
 
-    private static int _enemiesActive;
-    private static object spawnLock = new object();
+    public int enemiesActive;
+    private object spawnLock = new object();
 
     private void Start()
     {
@@ -36,23 +61,23 @@ public class EnemySpawning : MonoBehaviour
     {
         lock (spawnLock)
         {
-            return _enemiesActive < maximumNumberOfEnemies;
+            return enemiesActive < maximumNumberOfEnemies;
         }
     }
 
-    private static void IncrementEnemyCount()
+    private void IncrementEnemyCount()
     {
         lock (spawnLock)
         {
-            _enemiesActive++;
+            enemiesActive++;
         }
     }
 
-    public static void DecrementEnemyCount()
+    public void DecrementEnemyCount()
     {
         lock (spawnLock)
         {
-            _enemiesActive--;
+            enemiesActive--;
         }
     }
 }
