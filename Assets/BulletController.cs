@@ -28,6 +28,9 @@ public class BulletController : MonoBehaviour
         else if (target == "Enemy")
         {
             IDamageable damageable = other.gameObject.GetComponent<IDamageable>();
+            if (damageable == null) {
+                damageable = other.gameObject.GetComponentInParent<IDamageable>();
+            }
             if(damageable != null) {
                 damageable.OnHit(damage);
             }

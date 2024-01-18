@@ -61,7 +61,7 @@
     {
     aiPath = GetComponent<AIPath>();
     animator = GetComponent<Animator>();
-    sprite = GetComponent<SpriteRenderer>();
+    sprite = GetComponentInChildren<SpriteRenderer>();
     
     // Declare the playerObject variable within the Start method
     GameObject playerObject = GameObject.FindGameObjectWithTag("Player");

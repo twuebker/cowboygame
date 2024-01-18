@@ -63,7 +63,7 @@ public class EnemyController : MonoBehaviour, IDamageable
         aiPath = GetComponent<AIPath>();
         animator = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        sprite = GetComponent<SpriteRenderer>();
+        sprite = GetComponentInChildren<SpriteRenderer>();
     }
 
     void Update()
@@ -139,7 +139,7 @@ public class EnemyController : MonoBehaviour, IDamageable
 
     void Die()
     {
-        animator.SetTrigger("Death");
+        animator.SetTrigger("death");
         Score.AddScore(scoreValue);
         this.enabled = false;
         StartCoroutine(FadeAlpha());
