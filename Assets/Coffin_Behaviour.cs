@@ -143,6 +143,7 @@ public class EnemyController : MonoBehaviour, IDamageable
 
     void Die()
     {
+        EnemySpawning.DecrementEnemyCount();
         animator.SetTrigger("death");
         Score.AddScore(scoreValue);
         this.enabled = false;
