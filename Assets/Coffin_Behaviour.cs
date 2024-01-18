@@ -64,6 +64,8 @@ public class EnemyController : MonoBehaviour, IDamageable
         animator = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
         sprite = GetComponentInChildren<SpriteRenderer>();
+        AIDestinationSetter aiDestinationSetter = GetComponent<AIDestinationSetter>();
+        aiDestinationSetter.target = player;
     }
 
     void Update()
