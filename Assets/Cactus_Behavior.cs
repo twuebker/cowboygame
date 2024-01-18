@@ -17,6 +17,7 @@ public class Cactus_Behavior : MonoBehaviour, IDamageable
     private SpriteRenderer sprite;
     public int scoreValue = 10;
     public float _health = 200f;
+    public GameObject bulletPrefab;
 
     public float Health
     {
@@ -145,7 +146,40 @@ public class Cactus_Behavior : MonoBehaviour, IDamageable
         aiPath.canMove = false;
         animator.SetBool("canWalk", false);
         animator.SetTrigger("shoot");
+
+        StartCoroutine(ShootBullet());
     }
+
+public IEnumerator ShootBullet()
+{
+    yield return new WaitForSeconds(0.1f); 
+
+    float idleX = animator.GetFloat("moveX");
+    float idleY = animator.GetFloat("moveY");
+
+    if (idleX == 0 && idleY == 0)
+    {
+        idleX = player.position.x - transform.position.x;
+        idleY = player.position.y - transform.position.y;
+    }
+
+    float angle = Mathf.Atan2(idleY, idleX) * Mathf.Rad2Deg - 90;
+
+    Quaternion bulletRotation = Quaternion.Euler(0f, 0f, angle);
+
+    GameObject bullet = Instantiate(bulletPrefab, transform.position, bulletRotation);
+    bullet.GetComponent<BulletController>().target = "Player";
+
+    bullet.GetComponent<BulletController>().speed = 5f; 
+
+    bullet.transform.up = new Vector2(idleX, idleY).normalized;
+
+    Destroy(bullet, 2f); 
+
+    yield return new WaitForSeconds(attackCooldown);
+    isAttacking = false;
+}
+
 
     public void OnAttackComplete()
     {
