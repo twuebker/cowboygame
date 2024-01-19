@@ -18,6 +18,7 @@ public class Cactus_Behavior : MonoBehaviour, IDamageable
     public int scoreValue = 10;
     public float _health = 200f;
     public GameObject bulletPrefab;
+    private bool shootingCoroutineRunning = false;  
 
     public float Health
     {
@@ -152,32 +153,62 @@ public class Cactus_Behavior : MonoBehaviour, IDamageable
 
 public IEnumerator ShootBullet()
 {
-    yield return new WaitForSeconds(0.1f); 
-
-    float idleX = animator.GetFloat("moveX");
-    float idleY = animator.GetFloat("moveY");
-
-    if (idleX == 0 && idleY == 0)
+    if (shootingCoroutineRunning)
     {
-        idleX = player.position.x - transform.position.x;
-        idleY = player.position.y - transform.position.y;
+        yield break; // 如果协程已经在运行，则不再执行
     }
 
-    float angle = Mathf.Atan2(idleY, idleX) * Mathf.Rad2Deg - 90;
+    shootingCoroutineRunning = true;
+    yield return new WaitForSeconds(0.6f); // 等待直到射击动画到达发射子弹的帧
 
+    // 计算角色与玩家之间的方向
+    Vector2 directionToPlayer = (player.position - transform.position).normalized;
+
+    // 选择最接近的轴向方向（左、右、上、下）
+    Vector2 axisAlignedDirection;
+    if (Mathf.Abs(directionToPlayer.x) > Mathf.Abs(directionToPlayer.y))
+    {
+        // 更接近水平方向
+        axisAlignedDirection = new Vector2(Mathf.Sign(directionToPlayer.x), 0);
+    }
+    else
+    {
+        // 更接近垂直方向
+        axisAlignedDirection = new Vector2(0, Mathf.Sign(directionToPlayer.y));
+    }
+
+    // 子弹发射位置的偏移
+    Vector2 offset = axisAlignedDirection * 0.3f;
+    Vector3 bulletPosition = transform.position + new Vector3(offset.x, offset.y, 0f);
+
+    // 计算发射角度
+    float angle;
+    if (axisAlignedDirection.x != 0)
+    {
+        // 水平方向
+        angle = axisAlignedDirection.x > 0 ? 0f : 180f;
+    }
+    else
+    {
+        // 垂直方向
+        angle = axisAlignedDirection.y > 0 ? 90f : -90f;
+    }
+
+    // 设置子弹的旋转角度
     Quaternion bulletRotation = Quaternion.Euler(0f, 0f, angle);
 
-    GameObject bullet = Instantiate(bulletPrefab, transform.position, bulletRotation);
+    // 实例化子弹
+    GameObject bullet = Instantiate(bulletPrefab, bulletPosition, bulletRotation);
     bullet.GetComponent<BulletController>().target = "Player";
+    bullet.GetComponent<BulletController>().speed = 2.5f;
+    bullet.transform.up = axisAlignedDirection.normalized;
 
-    bullet.GetComponent<BulletController>().speed = 5f; 
-
-    bullet.transform.up = new Vector2(idleX, idleY).normalized;
-
-    Destroy(bullet, 2f); 
+    // 销毁子弹
+    Destroy(bullet, 2f);
 
     yield return new WaitForSeconds(attackCooldown);
     isAttacking = false;
+    shootingCoroutineRunning = false;
 }
 
 
@@ -192,6 +223,7 @@ public IEnumerator ShootBullet()
 
     private void ResetCooling()
     {
+        Debug.Log("OnAttackComplete called");
         // Called after the cooldown period to allow the enemy to attack again.
         coolingDown = false;
         lastAttackTime = Time.time; // Reset attack time.
