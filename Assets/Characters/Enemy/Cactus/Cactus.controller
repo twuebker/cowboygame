@@ -43,9 +43,9 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0
+  m_TransitionDuration: 0.016799927
   m_TransitionOffset: 0
-  m_ExitTime: 0.9983917
+  m_ExitTime: 0.9828041
   m_HasExitTime: 1
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
@@ -175,9 +175,9 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.027834475
+  m_TransitionDuration: 0.012101114
   m_TransitionOffset: 0
-  m_ExitTime: 0.8454799
+  m_ExitTime: 0.98707986
   m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
@@ -257,7 +257,7 @@ BlendTree:
     m_DirectBlendParameter: Blend
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: 9e0dc698db85fcd46903c3b6a75329e6, type: 2}
+    m_Motion: {fileID: 7400000, guid: cde73a7feca8a3046ad92e8d1af586d6, type: 2}
     m_Threshold: 0.71428573
     m_Position: {x: -0.707, y: 0.707}
     m_TimeScale: 1
@@ -265,7 +265,7 @@ BlendTree:
     m_DirectBlendParameter: Blend
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: 9e0dc698db85fcd46903c3b6a75329e6, type: 2}
+    m_Motion: {fileID: 7400000, guid: cde73a7feca8a3046ad92e8d1af586d6, type: 2}
     m_Threshold: 0.85714287
     m_Position: {x: 0.707, y: -0.707}
     m_TimeScale: 1
@@ -273,7 +273,7 @@ BlendTree:
     m_DirectBlendParameter: Blend
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: 9e0dc698db85fcd46903c3b6a75329e6, type: 2}
+    m_Motion: {fileID: 7400000, guid: cde73a7feca8a3046ad92e8d1af586d6, type: 2}
     m_Threshold: 1
     m_Position: {x: -0.707, y: -0.707}
     m_TimeScale: 1
@@ -301,31 +301,31 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: moveY
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: shoot
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: canWalk
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: death
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -487,9 +487,9 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.04333341
+  m_TransitionDuration: 0.012933433
   m_TransitionOffset: 0
-  m_ExitTime: 0.78077316
+  m_ExitTime: 0.98087436
   m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
