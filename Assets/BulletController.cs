@@ -24,22 +24,34 @@ public class BulletController : MonoBehaviour
         if (target == "Player")
         {
             handlePlayerCollision(other);
+
+            if (other.name != "Cactus")
+            {
+                Destroy(gameObject);
+            }
         }
         else if (target == "Enemy")
         {
             IDamageable damageable = other.gameObject.GetComponent<IDamageable>();
-            if(damageable != null) {
+            if (damageable == null)
+            {
+                damageable = other.gameObject.GetComponentInParent<IDamageable>();
+            }
+            if (damageable != null)
+            {
                 damageable.OnHit(damage);
             }
-        }
-        if (other.name != "Player" && other.name != "Hitbox")
-        {
-            Destroy(gameObject);
+
+            if (other.name != "Player" && other.name != "Hitbox")
+            {
+                Destroy(gameObject);
+            }
         }
     }
 
     private void handlePlayerCollision(Collider2D other)
     {
+        Debug.Log("Bullet");
         if (other.name == "Player" || other.name == "Hitbox")
         {
             GameObject player = GameObject.FindGameObjectWithTag("Player");

@@ -10,6 +10,7 @@ public class Score : MonoBehaviour
     public Text pointsText;
     public TextMeshProUGUI text;
     private static int score;
+    private static object scoreLock = new object();
 
     private static Score instance;
     public static Score Instance {
@@ -31,16 +32,20 @@ public class Score : MonoBehaviour
     }
 
     public static void AddScore(int scoreToAdd) {
-        score += scoreToAdd;
+        lock(scoreLock) {
+            score += scoreToAdd;
+        }
     }
 
     public static void SetScore(int scoreToSet) {
-        score = scoreToSet;
+        lock(scoreLock) {
+            score = scoreToSet;
+        }
     }
 
     public void Setup(int score)
     {
         gameObject.SetActive(true);
-        pointsText.text = score.ToString() + " POINTS";
+        pointsText.text = score.ToString() + " Points";
     }
 }
