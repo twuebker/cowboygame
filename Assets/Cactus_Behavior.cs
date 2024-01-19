@@ -230,11 +230,33 @@ public IEnumerator ShootBullet()
     }
 
     void Die()
+{
+    animator.SetTrigger("death");
+    Score.AddScore(scoreValue);
+    this.enabled = false;
+    StartCoroutine(FadeAlpha());
+
+    // 停止所有移动
+    if (aiPath != null)
     {
-        animator.SetTrigger("death");
-        Score.AddScore(scoreValue);
-        this.enabled = false;
-        StartCoroutine(FadeAlpha());
-        GetComponent<Rigidbody2D>().isKinematic = true;
+        aiPath.canMove = false; // 禁止 AIPath 控制移动
+        aiPath.canSearch = false; // 禁止 AIPath 寻路
     }
+
+    // 禁用 Rigidbody2D 组件，以防止任何物理影响
+    Rigidbody2D rb = GetComponent<Rigidbody2D>();
+    if (rb != null)
+    {
+        rb.velocity = Vector2.zero; // 将速度设置为零
+        rb.isKinematic = true; // 设置为运动学，以防止物理影响
+    }
+
+    // 禁用所有碰撞器，以防止进一步的物理交互
+    Collider2D[] colliders = GetComponentsInChildren<Collider2D>();
+    foreach (Collider2D collider in colliders)
+    {
+        collider.enabled = false;
+    }
+}
+
 }
