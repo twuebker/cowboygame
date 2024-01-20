@@ -125,9 +125,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireballPrefab: {fileID: 4118178585073524956, guid: 5559508d845dfda4da520e61eded546a, type: 3}
-  patrolSpeed: 0.6
-  chaseSpeed: 0.6
-  chaseTriggerDistance: 5
+  patrolSpeed: 0.3
+  chaseSpeed: 0.2
+  chaseTriggerDistance: 3
   attackRange: 1
   attackCooldown: 1
   patrolDistance: {x: -4, y: 4}
@@ -249,7 +249,7 @@ MonoBehaviour:
   radius: 0.2
   height: 2
   canMove: 1
-  maxSpeed: 0.7
+  maxSpeed: 0.4
   gravity: {x: 0, y: 0, z: 0}
   groundMask:
     serializedVersion: 2
