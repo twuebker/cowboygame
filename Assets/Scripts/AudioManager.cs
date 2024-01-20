@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class AudioManager : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class AudioManager : MonoBehaviour
     private AudioSource soundEffects;
 
     private AudioSource backgroundMusic;
+    public float maxBgVolume;
 
     private static AudioManager instance;
     public static AudioManager Instance {
@@ -25,6 +27,8 @@ public class AudioManager : MonoBehaviour
     {   
         soundEffects = GameObject.Find("SoundEffects").GetComponent<AudioSource>();
         backgroundMusic = GameObject.Find("BackgroundMusic").GetComponent<AudioSource>();
+        backgroundMusic.clip = clips[1];
+        backgroundMusic.Play();
         if(soundEffects == null || backgroundMusic == null) {
             Debug.Log("Failed to load soundEffect or bgMusic source");
         }
@@ -38,6 +42,33 @@ public class AudioManager : MonoBehaviour
         }
         soundEffects.clip = clips[0];
         soundEffects.Play();
+    }
+
+    public void PlayDayClip() {
+        StartCoroutine(FadeTrack(clips[1]));
+    }
+
+    public void PlayNightClip() {
+        StartCoroutine(FadeTrack(clips[2]));
+    }
+
+    private IEnumerator FadeTrack(AudioClip clip) {
+        float timeElapsed = 0;
+        float timeToFade = 0.5f;
+        while(timeElapsed < timeToFade) {
+            backgroundMusic.volume = Mathf.Lerp(maxBgVolume, 0, timeElapsed/timeToFade);
+            timeElapsed += Time.deltaTime;
+            yield return null;
+        }
+        timeElapsed = 0;
+        timeToFade = 0.5f;
+        backgroundMusic.clip = clip;
+        backgroundMusic.Play();
+        while(timeElapsed < timeToFade) {
+            backgroundMusic.volume = Mathf.Lerp(0, maxBgVolume, timeElapsed/timeToFade);
+            timeElapsed += Time.deltaTime;
+            yield return null;
+        }
     }
 
 }

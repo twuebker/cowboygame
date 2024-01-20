@@ -80,4 +80,9 @@ public class EnemySpawning : MonoBehaviour
             enemiesActive--;
         }
     }
+
+    public void IncreaseMaximumEnemies() 
+    {
+        maximumNumberOfEnemies++;
+    }
 }

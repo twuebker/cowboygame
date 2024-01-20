@@ -65,7 +65,10 @@ public class EnemyController : MonoBehaviour, IDamageable
     {
         aiPath = GetComponent<AIPath>();
         animator = GetComponent<Animator>();
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        GameObject p = GameObject.FindGameObjectWithTag("Player");
+        if(p != null) {
+            player = p.transform;
+        }
         sprite = GetComponentInChildren<SpriteRenderer>();
         coll = GetComponentsInChildren<Collider2D>();
         AIDestinationSetter aiDestinationSetter = GetComponent<AIDestinationSetter>();
