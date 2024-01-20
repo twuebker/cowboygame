@@ -22,15 +22,21 @@ public class CoyoteController : MonoBehaviour, IDamageable
     public float attackRange = 1f;
     public float attackCooldown = 1f;
     public Vector2 patrolDistance = new Vector2(-4f, 4f);
-    public float Health {
-        get {
+    public float Health
+    {
+        get
+        {
             return _health;
         }
-        set {
+        set
+        {
             _health = value;
-            if(_health <= 0) {
+            if (_health <= 0)
+            {
                 Die();
-            } else {
+            }
+            else
+            {
                 StartCoroutine(FlashRed());
             }
         }
@@ -65,80 +71,80 @@ public class CoyoteController : MonoBehaviour, IDamageable
 
     // Update is called once per frame
     void Update()
-{
-    // Attack timer logic can stay in Update if it's not directly related to physics    
-    if (attackTimer > 0)
     {
-        attackTimer -= Time.deltaTime;
-        if (attackTimer <= 0)
+        // Attack timer logic can stay in Update if it's not directly related to physics    
+        if (attackTimer > 0)
         {
-            canAttack = true;
+            attackTimer -= Time.deltaTime;
+            if (attackTimer <= 0)
+            {
+                canAttack = true;
+            }
+        }
+
+        // Assuming playerTransform could be destroyed (player dies or is removed from the scene)
+        if (playerTransform != null)
+        {
+            // Calculate distance to player and store it for use in FixedUpdate
+            float distanceToPlayer = Vector2.Distance(playerTransform.position, transform.position);
+
+            // Set the IsAttacking parameter based on the attack timer
+            animator.SetBool("IsAttacking", attackTimer > 0);
+        }
+
+        // Update the sprite flip based on the AIPath's desired velocity
+        if (aiPath.desiredVelocity.x < 0)
+        {
+            sprite.flipX = true; // left flip Sprite
+        }
+        else if (aiPath.desiredVelocity.x > 0)
+        {
+            sprite.flipX = false; // right normal Sprite
         }
     }
 
-    // Assuming playerTransform could be destroyed (player dies or is removed from the scene)
-    if (playerTransform != null)
-    {
-        // Calculate distance to player and store it for use in FixedUpdate
-        float distanceToPlayer = Vector2.Distance(playerTransform.position, transform.position);
-
-        // Set the IsAttacking parameter based on the attack timer
-        animator.SetBool("IsAttacking", attackTimer > 0);
-    }
-
-    // Update the sprite flip based on the AIPath's desired velocity
-    if (aiPath.desiredVelocity.x < 0)
-    {
-        sprite.flipX = true; // left flip Sprite
-    }
-    else if (aiPath.desiredVelocity.x > 0)
-    {
-        sprite.flipX = false; // right normal Sprite
-    }
-}
-
 
     void FixedUpdate()
-{
-    if (playerTransform == null)
     {
-        // If the player is not present (e.g., has been destroyed), do nothing.
-        return;
+        if (playerTransform == null)
+        {
+            // If the player is not present (e.g., has been destroyed), do nothing.
+            return;
+        }
+
+        // Update the AIPath's destination to be the player's position
+        aiPath.destination = playerTransform.position;
+
+        // Calculate the distance to the player again in case it's needed for logic within FixedUpdate
+        float distanceToPlayer = Vector2.Distance(playerTransform.position, rb.position);
+
+        // Perform the attack if in range and if the attack cooldown has elapsed
+        if (distanceToPlayer < attackRange && canAttack)
+        {
+            Attack();
+            canAttack = false;
+            attackTimer = attackCooldown;
+        }
+
+        // The UpdateAnimation call will use the AIPath's desired velocity to update the animation parameters
+        UpdateAnimation(aiPath.desiredVelocity);
     }
 
-    // Update the AIPath's destination to be the player's position
-    aiPath.destination = playerTransform.position;
-
-    // Calculate the distance to the player again in case it's needed for logic within FixedUpdate
-    float distanceToPlayer = Vector2.Distance(playerTransform.position, rb.position);
-
-    // Perform the attack if in range and if the attack cooldown has elapsed
-    if (distanceToPlayer < attackRange && canAttack)
+    void UpdateAnimation(Vector2 velocity)
     {
-        Attack();
-        canAttack = false;
-        attackTimer = attackCooldown;
-    }
+        // Check if the AIPath component is moving and if the velocity is significant
+        bool isMoving = aiPath.canMove && velocity.sqrMagnitude > 0.1f;
+        animator.SetBool("IsMoving", isMoving); // Use the correct parameter name as defined in your Animator
 
-    // The UpdateAnimation call will use the AIPath's desired velocity to update the animation parameters
-    UpdateAnimation(aiPath.desiredVelocity);
-}
-
-void UpdateAnimation(Vector2 velocity)
-{
-    // Check if the AIPath component is moving and if the velocity is significant
-    bool isMoving = aiPath.canMove && velocity.sqrMagnitude > 0.1f;
-    animator.SetBool("IsMoving", isMoving); // Use the correct parameter name as defined in your Animator
-    
-    if (isMoving)
-    {
-        // Calculate the local direction of the movement
-        Vector2 localDirection = transform.InverseTransformDirection(velocity.x, velocity.y, 0);
-        // Set the MoveX and MoveY parameters with the local direction values
-        animator.SetFloat("MoveX", localDirection.x);
-        animator.SetFloat("MoveY", localDirection.y);
+        if (isMoving)
+        {
+            // Calculate the local direction of the movement
+            Vector2 localDirection = transform.InverseTransformDirection(velocity.x, velocity.y, 0);
+            // Set the MoveX and MoveY parameters with the local direction values
+            animator.SetFloat("MoveX", localDirection.x);
+            animator.SetFloat("MoveY", localDirection.y);
+        }
     }
-}
 
 
 
@@ -164,6 +170,22 @@ void UpdateAnimation(Vector2 velocity)
         MoveTowards(playerTransform.position, chaseSpeed);
     }
 
+    public void lockMovement()
+    {
+        if (aiPath != null)
+        {
+            aiPath.canMove = false;
+        }
+    }
+
+    public void unlockMovement()
+    {
+        if (aiPath != null) 
+        { 
+            aiPath.canMove = true; 
+        }
+    }
+
     void MoveTowards(Vector2 target, float speed)
     {
         if (target == null)
@@ -187,49 +209,46 @@ void UpdateAnimation(Vector2 velocity)
         // Reset attack timer
         attackTimer = attackCooldown;
 
-        // Perform the attack
-        Debug.Log("Coyote attacks the player!");
-
         // Trigger attack animation
         animator.SetTrigger("Attack");
         StartCoroutine(SpawnFireball());
     }
 
     void Die()
-{
-    if (!this.enabled)
     {
-        return;
+        if (!this.enabled)
+        {
+            return;
+        }
+
+        // 触发死亡动画
+        animator.SetTrigger("Death");
+
+        // 增加分数
+        Score.AddScore(scoreValue);
+
+        // 开始透明度渐变协程
+        StartCoroutine(FadeAlpha());
+
+        // 禁用碰撞器
+        coll.enabled = false;
+
+        // 禁用移动和攻击脚本
+        this.enabled = false;
+
+        // 停止所有运动，防止死亡时移动
+        if (rb != null)
+        {
+            rb.velocity = Vector2.zero;
+            rb.isKinematic = true; // 使其变为运动学，防止受到物理影响
+        }
+
+        // 禁用 AIPath 组件，防止 AI 控制
+        if (aiPath != null)
+        {
+            aiPath.enabled = false;
+        }
     }
-
-    // 触发死亡动画
-    animator.SetTrigger("Death");
-
-    // 增加分数
-    Score.AddScore(scoreValue);
-
-    // 开始透明度渐变协程
-    StartCoroutine(FadeAlpha());
-
-    // 禁用碰撞器
-    coll.enabled = false;
-
-    // 禁用移动和攻击脚本
-    this.enabled = false;
-
-    // 停止所有运动，防止死亡时移动
-    if (rb != null)
-    {
-        rb.velocity = Vector2.zero;
-        rb.isKinematic = true; // 使其变为运动学，防止受到物理影响
-    }
-
-    // 禁用 AIPath 组件，防止 AI 控制
-    if (aiPath != null)
-    {
-        aiPath.enabled = false;
-    }
-}
 
 
     // This method will be called by an Animation Event during the attack animation.
@@ -237,11 +256,11 @@ void UpdateAnimation(Vector2 velocity)
     {
         if (fireballPrefab != null)
         {
+            shotReady = false;
             while (!shotReady)
             {
                 yield return null;
             }
-            shotReady = false;
             GameObject fireball = Instantiate(fireballPrefab, transform.position, Quaternion.identity);
             FireballController fireballController = fireball.GetComponent<FireballController>();
             Destroy(fireball, 3f);
@@ -251,6 +270,7 @@ void UpdateAnimation(Vector2 velocity)
                 if (player == null)
                 {
                     Debug.Log("No player!");
+                    shotReady = false;
                     yield break;
                 }
                 Transform t = player.transform;
@@ -265,6 +285,7 @@ void UpdateAnimation(Vector2 velocity)
         {
             Debug.LogError("Fireball prefab not assigned!");
         }
+        shotReady = false;
     }
 
     public void SetShotReady()

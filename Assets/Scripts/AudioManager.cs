@@ -11,6 +11,7 @@ public class AudioManager : MonoBehaviour
     private AudioSource soundEffects;
 
     private AudioSource backgroundMusic;
+    private AudioSource backgroundMusic2;
     public float maxBgVolume;
 
     private static AudioManager instance;
@@ -25,11 +26,12 @@ public class AudioManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {   
-        soundEffects = GameObject.Find("SoundEffects").GetComponent<AudioSource>();
-        backgroundMusic = GameObject.Find("BackgroundMusic").GetComponent<AudioSource>();
-        backgroundMusic.clip = clips[1];
-        backgroundMusic.Play();
-        if(soundEffects == null || backgroundMusic == null) {
+        backgroundMusic = GetChildByName("BackgroundMusic");
+        backgroundMusic2 = GetChildByName("BackgroundMusic2");
+        soundEffects = GetChildByName("SoundEffects");
+
+        backgroundMusic2.Stop();
+        if(soundEffects == null || backgroundMusic == null || backgroundMusic2 == null) {
             Debug.Log("Failed to load soundEffect or bgMusic source");
         }
         instance = this;
@@ -45,30 +47,63 @@ public class AudioManager : MonoBehaviour
     }
 
     public void PlayDayClip() {
-        StartCoroutine(FadeTrack(clips[1]));
+       // Make sure both audio sources are not null
+        if (backgroundMusic != null && backgroundMusic2 != null)
+        {
+            StartCoroutine(CrossFade(backgroundMusic2, backgroundMusic, 1.0f));
+        }
     }
 
     public void PlayNightClip() {
-        StartCoroutine(FadeTrack(clips[2]));
+       // Make sure both audio sources are not null
+        if (backgroundMusic != null && backgroundMusic2 != null)
+        {
+            StartCoroutine(CrossFade(backgroundMusic, backgroundMusic2, 1.0f));
+        }
     }
 
-    private IEnumerator FadeTrack(AudioClip clip) {
-        float timeElapsed = 0;
-        float timeToFade = 0.5f;
-        while(timeElapsed < timeToFade) {
-            backgroundMusic.volume = Mathf.Lerp(maxBgVolume, 0, timeElapsed/timeToFade);
-            timeElapsed += Time.deltaTime;
+        // Helper method to find child by name
+    private AudioSource GetChildByName(string childName)
+    {
+        Transform childTransform = transform.Find(childName);
+
+        if (childTransform != null)
+        {
+            return childTransform.GetComponent<AudioSource>();
+        }
+        else
+        {
+            Debug.LogError(childName + " not found!");
+            return null;
+        }
+    }
+
+    // Coroutine for crossfading between two audio sources
+    private IEnumerator CrossFade(AudioSource fadeOutSource, AudioSource fadeInSource, float duration)
+    {
+        float elapsedTime = 0f;
+        float startVolume = fadeOutSource.volume;
+        fadeInSource.Play();
+        while (elapsedTime < duration)
+        {
+            fadeOutSource.volume = Mathf.Lerp(startVolume, 0f, elapsedTime / duration);
+            fadeInSource.volume = Mathf.Lerp(0f, startVolume, elapsedTime / duration);
+
+            elapsedTime += Time.deltaTime;
+
             yield return null;
         }
-        timeElapsed = 0;
-        timeToFade = 0.5f;
-        backgroundMusic.clip = clip;
-        backgroundMusic.Play();
-        while(timeElapsed < timeToFade) {
-            backgroundMusic.volume = Mathf.Lerp(0, maxBgVolume, timeElapsed/timeToFade);
-            timeElapsed += Time.deltaTime;
-            yield return null;
-        }
+
+        // Ensure a clean transition and avoid potential volume issues
+        fadeOutSource.volume = 0f;
+        fadeInSource.volume = startVolume;
+
+        // Pause and reset the faded out audio source
+        fadeOutSource.Pause();
+        fadeOutSource.time = 0;
+
+        // Unpause and play the new audio source
+        fadeInSource.UnPause();
     }
 
 }
