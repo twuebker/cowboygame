@@ -18,6 +18,8 @@ public class EnemyController : MonoBehaviour, IDamageable
     public int scoreValue = 10;
     public float _health = 200f;
     private Collider2D[] coll;
+    public Collider2D hitBox;
+
 
     public float Health {
         get {
@@ -70,35 +72,39 @@ public class EnemyController : MonoBehaviour, IDamageable
         aiDestinationSetter.target = player;
     }
 
+    public void ActivateHitbox()
+    {
+    // 此处hitBox是您的攻击碰撞器，可能是一个Collider2D组件
+    hitBox.enabled = true;
+    }
+
+    public void DeactivateHitbox()
+    {
+    hitBox.enabled = false;
+    }
+
+
     void Update()
     {
-        // Check if the player has been destroyed and stop executing if it has
-        if (player == null)
+    if (player == null || isAttacking || coolingDown)
         {
         aiPath.canMove = false;
-        return; // Exit the Update method early
+        return;
         }
 
-        if (!isAttacking)
-        {
-            aiPath.canMove = true;
-            UpdateAnimation(aiPath.desiredVelocity);
-            CheckForAttackOpportunity();
-        }
+    aiPath.canMove = true;
+    UpdateAnimation(aiPath.desiredVelocity);
+    CheckForAttackOpportunity();
     }
 
     void CheckForAttackOpportunity()
     {
-        // Check if the player has been destroyed
-        if (player == null) return;
-        
-        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
-        if (distanceToPlayer < attackRange && !coolingDown)
-        {
-            if (Time.time > lastAttackTime + attackCooldown)
-            {
-                Attack();
-            }
+    if (player == null || isAttacking || coolingDown) return;
+
+    float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+    if (distanceToPlayer < attackRange && Time.time > lastAttackTime + attackCooldown)
+        {   
+        Attack();
         }
     }
 
@@ -117,21 +123,36 @@ public class EnemyController : MonoBehaviour, IDamageable
     }
 
     void Attack()
-    {
-        lastAttackTime = Time.time;
-        isAttacking = true;
-        aiPath.canMove = false;
-        animator.SetBool("canWalk", false);
-        animator.SetTrigger("Attack");
-    }
+{
+    if (isAttacking || coolingDown) return; // 确保不重复攻击
+
+    isAttacking = true;
+    lastAttackTime = Time.time;
+    aiPath.canMove = false;
+    animator.SetBool("canWalk", false);
+    animator.SetTrigger("Attack");
+
+    // 假设攻击动画长度是0.6秒，我们延迟0.6秒调用OnAttackComplete
+    Invoke(nameof(OnAttackComplete), 0.6f); 
+}
 
     public void OnAttackComplete()
+{
+    if (!isAttacking) // 如果不是在攻击状态，不需要做任何事
     {
-        // This method is called via an animation event.
-        isAttacking = false;
-        coolingDown = true;
-        animator.SetBool("Attack", false); // Reset the Attack parameter.
-        Invoke(nameof(ResetCooling), attackCooldown); // Start cooldown.
+        return;
+    }
+
+    isAttacking = false;
+    coolingDown = true;
+    animator.SetBool("Attack", false);
+    Invoke(nameof(ResetCooling), attackCooldown);
+}
+
+    void OnDisable()
+    {
+    CancelInvoke(nameof(OnAttackComplete));
+    CancelInvoke(nameof(ResetCooling));
     }
 
     private void ResetCooling()

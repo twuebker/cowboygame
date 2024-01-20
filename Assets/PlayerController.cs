@@ -163,6 +163,14 @@ public class PlayerController : MonoBehaviour
         Destroy(bullet, 2f);
     }
 
+    void OnTriggerEnter2D(Collider2D collision)
+{
+    if (collision.gameObject.tag == "EnemyAttack")
+    {
+        Death();
+    }
+}
+
     public void Death()
     {
         Debug.Log("Death was triggered");
