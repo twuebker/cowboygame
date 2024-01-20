@@ -196,20 +196,41 @@ void UpdateAnimation(Vector2 velocity)
     }
 
     void Die()
+{
+    if (!this.enabled)
     {
-        if (!this.enabled)
-        {
-            return;
-        }
-        // Trigger death animation
-        animator.SetTrigger("Death");
-        Score.AddScore(scoreValue);
-        StartCoroutine(FadeAlpha());
-        // Disable enemy components or behaviors that should not function after death
-        // For example, disable the script that controls movement and attacks
-        coll.enabled = false;
-        this.enabled = false;
+        return;
     }
+
+    // 触发死亡动画
+    animator.SetTrigger("Death");
+
+    // 增加分数
+    Score.AddScore(scoreValue);
+
+    // 开始透明度渐变协程
+    StartCoroutine(FadeAlpha());
+
+    // 禁用碰撞器
+    coll.enabled = false;
+
+    // 禁用移动和攻击脚本
+    this.enabled = false;
+
+    // 停止所有运动，防止死亡时移动
+    if (rb != null)
+    {
+        rb.velocity = Vector2.zero;
+        rb.isKinematic = true; // 使其变为运动学，防止受到物理影响
+    }
+
+    // 禁用 AIPath 组件，防止 AI 控制
+    if (aiPath != null)
+    {
+        aiPath.enabled = false;
+    }
+}
+
 
     // This method will be called by an Animation Event during the attack animation.
     public IEnumerator SpawnFireball()

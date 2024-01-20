@@ -22,13 +22,14 @@ public class FireballController : MonoBehaviour
     }
 
     void OnTriggerEnter2D(Collider2D other)
+{
+    // 检查碰撞对象是否为玩家或其子弹
+    if(other.CompareTag("Player") || other.CompareTag("Player-Bullet"))
     {
-        if(other.name != "Player" && other.name != "Hitbox") {
-            return;
-        }
         handlePlayerCollision(other);
-        Destroy(gameObject);
+        Destroy(gameObject); // 销毁火球
     }
+}
 
     private void handlePlayerCollision(Collider2D other) {
         // Destroy the fireball when it hits something
