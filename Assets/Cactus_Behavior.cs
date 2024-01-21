@@ -63,6 +63,7 @@ public class Cactus_Behavior : MonoBehaviour, IDamageable
             sprite.color = newColor;
             yield return null;
         }
+        Destroy(gameObject);
     }
 
     void Start()
@@ -223,7 +224,6 @@ public IEnumerator ShootBullet()
 
     private void ResetCooling()
     {
-        Debug.Log("OnAttackComplete called");
         // Called after the cooldown period to allow the enemy to attack again.
         coolingDown = false;
         lastAttackTime = Time.time; // Reset attack time.
@@ -235,7 +235,7 @@ public IEnumerator ShootBullet()
     Score.AddScore(scoreValue);
     this.enabled = false;
     StartCoroutine(FadeAlpha());
-
+    EnemySpawning.Instance.DecrementEnemyCount();
     // 停止所有移动
     if (aiPath != null)
     {

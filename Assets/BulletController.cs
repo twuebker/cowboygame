@@ -51,7 +51,6 @@ public class BulletController : MonoBehaviour
 
     private void handlePlayerCollision(Collider2D other)
     {
-        Debug.Log("Bullet");
         if (other.name == "Player" || other.name == "Hitbox")
         {
             GameObject player = GameObject.FindGameObjectWithTag("Player");

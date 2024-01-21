@@ -15,6 +15,8 @@ public class CoyoteController : MonoBehaviour, IDamageable
     public GameObject fireballPrefab;
     private bool canAttack = true;
     private AIPath aiPath;
+    private object attackLock = new object();
+    private bool attacking = false;
 
     public float patrolSpeed = 2f;
     public float chaseSpeed = 3.5f;
@@ -180,9 +182,9 @@ public class CoyoteController : MonoBehaviour, IDamageable
 
     public void unlockMovement()
     {
-        if (aiPath != null) 
-        { 
-            aiPath.canMove = true; 
+        if (aiPath != null)
+        {
+            aiPath.canMove = true;
         }
     }
 
@@ -235,6 +237,7 @@ public class CoyoteController : MonoBehaviour, IDamageable
 
         // 禁用移动和攻击脚本
         this.enabled = false;
+        EnemySpawning.Instance.DecrementEnemyCount();
 
         // 停止所有运动，防止死亡时移动
         if (rb != null)
@@ -254,6 +257,13 @@ public class CoyoteController : MonoBehaviour, IDamageable
     // This method will be called by an Animation Event during the attack animation.
     public IEnumerator SpawnFireball()
     {
+        lock(attackLock) {
+            if(!attacking) {
+                attacking = true;
+            } else {
+                yield break;
+            }
+        }
         if (fireballPrefab != null)
         {
             shotReady = false;
@@ -284,6 +294,9 @@ public class CoyoteController : MonoBehaviour, IDamageable
         else
         {
             Debug.LogError("Fireball prefab not assigned!");
+        }
+        lock(attackLock) {
+            attacking = false;
         }
         shotReady = false;
     }
