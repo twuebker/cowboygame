@@ -21,9 +21,8 @@ public class FireballController : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+void OnTriggerEnter2D(Collider2D other)
 {
-    // 检查碰撞对象是否为玩家或其子弹
     if(other.CompareTag("Player") || other.CompareTag("Player-Bullet"))
     {
         handlePlayerCollision(other);
@@ -31,15 +30,14 @@ public class FireballController : MonoBehaviour
     }
 }
 
-    private void handlePlayerCollision(Collider2D other) {
-        // Destroy the fireball when it hits something
-        if(other.name == "Player" || other.name == "Hitbox") {
-            GameObject player = GameObject.FindGameObjectWithTag("Player");
-            PlayerController pc = player.GetComponent<PlayerController>();
-            if(pc != null) {
-                pc.Death();
-            }
-        }
+private void handlePlayerCollision(Collider2D other) {
+    PlayerController pc = other.GetComponentInParent<PlayerController>();
+    if(pc != null) {
+        pc.Death();
     }
+}
+
+
+
 }
 
