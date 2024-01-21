@@ -1498,7 +1498,9 @@ MonoBehaviour:
 
 
     https://bakudas.itch.io/generic-oldwest-pack
-    by Vaca Roxa'
+    by Vaca Roxa
+
+    All Textures that are not in here are self-drawn!'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2f941c665616945289b8a1cf910ef5a5, type: 2}
   m_sharedMaterial: {fileID: -4358211770791097191, guid: 2f941c665616945289b8a1cf910ef5a5, type: 2}

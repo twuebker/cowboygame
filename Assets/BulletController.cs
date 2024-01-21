@@ -51,7 +51,6 @@ public class BulletController : MonoBehaviour
 
     private void handlePlayerCollision(Collider2D other)
     {
-        Debug.Log("Collision " + other.name);
         if (other.name == "Player" || other.name == "Hitbox")
         {
             PlayerController pc = other.GetComponentInParent<PlayerController>();
