@@ -18,7 +18,8 @@ public class Cactus_Behavior : MonoBehaviour, IDamageable
     public int scoreValue = 10;
     public float _health = 200f;
     public GameObject bulletPrefab;
-    private bool shootingCoroutineRunning = false;  
+    private bool shootingCoroutineRunning = false;
+    private Vector2 axisAlignedDirection;
 
     public float Health
     {
@@ -143,6 +144,20 @@ public class Cactus_Behavior : MonoBehaviour, IDamageable
 
     void Attack()
     {
+        // 计算角色与玩家之间的方向
+        Vector2 directionToPlayer = (player.position - transform.position).normalized;
+
+        // 选择最接近的轴向方向（左、右、上、下）
+        if (Mathf.Abs(directionToPlayer.x) > Mathf.Abs(directionToPlayer.y))
+        {
+            // 更接近水平方向
+            axisAlignedDirection = new Vector2(Mathf.Sign(directionToPlayer.x), 0);
+        }
+        else
+        {
+            // 更接近垂直方向
+            axisAlignedDirection = new Vector2(0, Mathf.Sign(directionToPlayer.y));
+        }
         lastAttackTime = Time.time;
         isAttacking = true;
         aiPath.canMove = false;
@@ -152,65 +167,49 @@ public class Cactus_Behavior : MonoBehaviour, IDamageable
         StartCoroutine(ShootBullet());
     }
 
-public IEnumerator ShootBullet()
-{
-    if (shootingCoroutineRunning)
+    public IEnumerator ShootBullet()
     {
-        yield break; // 如果协程已经在运行，则不再执行
+        if (shootingCoroutineRunning)
+        {
+            yield break; // 如果协程已经在运行，则不再执行
+        }
+
+        shootingCoroutineRunning = true;
+        yield return new WaitForSeconds(0.6f); // 等待直到射击动画到达发射子弹的帧
+
+        // 子弹发射位置的偏移
+        Vector2 offset = axisAlignedDirection * 0.3f;
+        Vector3 bulletPosition = transform.position + new Vector3(offset.x, offset.y, 0f);
+
+        // 计算发射角度
+        float angle;
+        if (axisAlignedDirection.x != 0)
+        {
+            // 水平方向
+            angle = axisAlignedDirection.x > 0 ? 0f : 180f;
+        }
+        else
+        {
+            // 垂直方向
+            angle = axisAlignedDirection.y > 0 ? 90f : -90f;
+        }
+
+        // 设置子弹的旋转角度
+        Quaternion bulletRotation = Quaternion.Euler(0f, 0f, angle);
+
+        // 实例化子弹
+        GameObject bullet = Instantiate(bulletPrefab, bulletPosition, bulletRotation);
+        bullet.GetComponent<BulletController>().target = "Player";
+        bullet.GetComponent<BulletController>().speed = 2.5f;
+        bullet.transform.up = axisAlignedDirection.normalized;
+
+        // 销毁子弹
+        Destroy(bullet, 2f);
+
+        yield return new WaitForSeconds(attackCooldown);
+        isAttacking = false;
+        shootingCoroutineRunning = false;
     }
-
-    shootingCoroutineRunning = true;
-    yield return new WaitForSeconds(0.6f); // 等待直到射击动画到达发射子弹的帧
-
-    // 计算角色与玩家之间的方向
-    Vector2 directionToPlayer = (player.position - transform.position).normalized;
-
-    // 选择最接近的轴向方向（左、右、上、下）
-    Vector2 axisAlignedDirection;
-    if (Mathf.Abs(directionToPlayer.x) > Mathf.Abs(directionToPlayer.y))
-    {
-        // 更接近水平方向
-        axisAlignedDirection = new Vector2(Mathf.Sign(directionToPlayer.x), 0);
-    }
-    else
-    {
-        // 更接近垂直方向
-        axisAlignedDirection = new Vector2(0, Mathf.Sign(directionToPlayer.y));
-    }
-
-    // 子弹发射位置的偏移
-    Vector2 offset = axisAlignedDirection * 0.3f;
-    Vector3 bulletPosition = transform.position + new Vector3(offset.x, offset.y, 0f);
-
-    // 计算发射角度
-    float angle;
-    if (axisAlignedDirection.x != 0)
-    {
-        // 水平方向
-        angle = axisAlignedDirection.x > 0 ? 0f : 180f;
-    }
-    else
-    {
-        // 垂直方向
-        angle = axisAlignedDirection.y > 0 ? 90f : -90f;
-    }
-
-    // 设置子弹的旋转角度
-    Quaternion bulletRotation = Quaternion.Euler(0f, 0f, angle);
-
-    // 实例化子弹
-    GameObject bullet = Instantiate(bulletPrefab, bulletPosition, bulletRotation);
-    bullet.GetComponent<BulletController>().target = "Player";
-    bullet.GetComponent<BulletController>().speed = 2.5f;
-    bullet.transform.up = axisAlignedDirection.normalized;
-
-    // 销毁子弹
-    Destroy(bullet, 2f);
-
-    yield return new WaitForSeconds(attackCooldown);
-    isAttacking = false;
-    shootingCoroutineRunning = false;
-}
 
 
     public void OnAttackComplete()
@@ -230,33 +229,33 @@ public IEnumerator ShootBullet()
     }
 
     void Die()
-{
-    animator.SetTrigger("death");
-    Score.AddScore(scoreValue);
-    this.enabled = false;
-    StartCoroutine(FadeAlpha());
-    EnemySpawning.Instance.DecrementEnemyCount();
-    // 停止所有移动
-    if (aiPath != null)
     {
-        aiPath.canMove = false; // 禁止 AIPath 控制移动
-        aiPath.canSearch = false; // 禁止 AIPath 寻路
-    }
+        animator.SetTrigger("death");
+        Score.AddScore(scoreValue);
+        this.enabled = false;
+        StartCoroutine(FadeAlpha());
+        EnemySpawning.Instance.DecrementEnemyCount();
+        // 停止所有移动
+        if (aiPath != null)
+        {
+            aiPath.canMove = false; // 禁止 AIPath 控制移动
+            aiPath.canSearch = false; // 禁止 AIPath 寻路
+        }
 
-    // 禁用 Rigidbody2D 组件，以防止任何物理影响
-    Rigidbody2D rb = GetComponent<Rigidbody2D>();
-    if (rb != null)
-    {
-        rb.velocity = Vector2.zero; // 将速度设置为零
-        rb.isKinematic = true; // 设置为运动学，以防止物理影响
-    }
+        // 禁用 Rigidbody2D 组件，以防止任何物理影响
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            rb.velocity = Vector2.zero; // 将速度设置为零
+            rb.isKinematic = true; // 设置为运动学，以防止物理影响
+        }
 
-    // 禁用所有碰撞器，以防止进一步的物理交互
-    Collider2D[] colliders = GetComponentsInChildren<Collider2D>();
-    foreach (Collider2D collider in colliders)
-    {
-        collider.enabled = false;
+        // 禁用所有碰撞器，以防止进一步的物理交互
+        Collider2D[] colliders = GetComponentsInChildren<Collider2D>();
+        foreach (Collider2D collider in colliders)
+        {
+            collider.enabled = false;
+        }
     }
-}
 
 }
