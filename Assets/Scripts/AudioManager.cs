@@ -29,8 +29,9 @@ public class AudioManager : MonoBehaviour
         backgroundMusic = GetChildByName("BackgroundMusic");
         backgroundMusic2 = GetChildByName("BackgroundMusic2");
         soundEffects = GetChildByName("SoundEffects");
-
-        backgroundMusic2.Stop();
+        if(backgroundMusic2 != null) {
+            backgroundMusic2.Stop();
+        }
         if(soundEffects == null || backgroundMusic == null || backgroundMusic2 == null) {
             Debug.Log("Failed to load soundEffect or bgMusic source");
         }

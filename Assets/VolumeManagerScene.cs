@@ -21,6 +21,8 @@ public class VolumeManagerScene : MonoBehaviour
 
         backgroundAudio.volume = backgroundFloat;
         soundEffectsAudio.volume = soundEffectsFloat;
-        AudioManager.Instance.maxBgVolume = backgroundFloat;
+        if(AudioManager.Instance != null) {
+            AudioManager.Instance.maxBgVolume = backgroundFloat;
+        }
     }
 }
