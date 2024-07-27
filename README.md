@@ -2,7 +2,7 @@
 
 Cowboygame is a 2D adventure where you, the protagonist, spawn in a Western world to shoot monsters for score. The game features an immersive environment with a map, day and night cycle, various monster types, animations, and interactive menus.
 
-It was developed with by Arthur, Peng, and Theo for the Introduction to Game Development Course at the Leibniz University Hannover during Winter Semester 2023/2024. The game is written in the Unity Engine.
+It was developed with by Artur, Peng, and Theo for the *Introduction to Game Development* Course at the Leibniz University Hannover during Winter Semester 2023/2024. The game is written in the Unity Engine.
 
 ## Features
 
