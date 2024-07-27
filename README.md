@@ -19,9 +19,8 @@ Here are some in-game screenshots:
 ![Gameplay Screenshot](screenshots/Gameplay.png)
 ![Day and Night Cycle](screenshots/Night.png)
 
-## Development
 
-How to Play
+## How to Play
 
 1. Movement: Use the arrow keys or WASD to move your character around the map.
 2. Shooting: Click the mouse to shoot.
