@@ -24,13 +24,12 @@ Here are some in-game screenshots:
 
 1. Movement: Use the arrow keys or WASD to move your character around the map.
 2. Shooting: Click the mouse to shoot.
-3. Objective: Shoot the monsters to gain score. Survive and thrive in the Wild West!
+3. Escape: Invoke Menu
+4. Objective: Shoot the monsters to gain score. Survive and thrive in the Wild West!
 
-## Controls
+## Graphics
 
-- Arrow Keys/WASD: Move the character
-- Spacebar/Mouse Click: Shoot
-- Escape: Invoke Menu
+Most of the graphics were taken from the *Generic Old West* pack on [itch.io](https://bakudas.itch.io/generic-oldwest-pack). Some, like fireball or lantern, were created by us.
 
 ## Prerequisites
 
